@@ -1,12 +1,28 @@
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
-public abstract class Persona {
-    protected int idPersona;
-    protected String Nombre;
-    protected String Apellido;
-    protected int DNI;
-    protected int Telefono;
-    protected String correo_electronico;
+
+public  abstract class Persona {
+    private int idPersona;
+    private String Nombre;
+    private String apellido;
+    private int dni;
+    private String telefono;
+    private String CorreoElectronico;
+
+    private final List<Reclamo> reclamos = new ArrayList<>();
+    private final List<ComentarioReclamo> Comentarios = new ArrayList<>();
+
+    public Persona () {}
+
+    public Persona(int idPersona, String nombre, String apellido, int dni, String telefono, String correoElectronico) {
+        this.idPersona = idPersona;
+        Nombre = nombre;
+        this.apellido = apellido;
+        this.dni = dni;
+        this.telefono = telefono;
+        CorreoElectronico = correoElectronico;
+    }
 
     public int getIdPersona() {
         return idPersona;
@@ -25,43 +41,52 @@ public abstract class Persona {
     }
 
     public String getApellido() {
-        return Apellido;
+        return apellido;
     }
 
     public void setApellido(String apellido) {
-        Apellido = apellido;
+        this.apellido = apellido;
     }
 
-    public int getDNI() {
-        return DNI;
+    public int getDni() {
+        return dni;
     }
 
-    public void setDNI(int DNI) {
-        this.DNI = DNI;
+    public void setDni(int dni) {
+        this.dni = dni;
     }
 
-    public int getTelefono() {
-        return Telefono;
+    public String getTelefono() {
+        return telefono;
     }
 
-    public void setTelefono(int telefono) {
-        Telefono = telefono;
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 
-    public String getCorreo_electronico() {
-        return correo_electronico;
+    public String getCorreoElectronico() {
+        return CorreoElectronico;
     }
 
-    public void setCorreo_electronico(String correo_electronico) {
-        this.correo_electronico = correo_electronico;
+    public void setCorreoElectronico(String correoElectronico) {
+        CorreoElectronico = correoElectronico;
     }
 
-    public Persona(int idPersona, String nombre, String apellido, int DNI, int telefono, String correo_electronico) {
-        this.idPersona = idPersona;
-        Nombre = nombre;
-        Apellido = apellido;
-        this.DNI = DNI;
-        Telefono = telefono;
-        this.correo_electronico = correo_electronico;
+    public List<Reclamo> getReclamos() {
+        return List.copyOf(reclamos)
+    }
+    public void agregarReclamo(Reclamo reclamo) {
+        if ((reclamo != null) && !reclamos.contains(reclamo) {
+            reclamos.add(reclamo);
+        }
+    }
+
+    public List<ComentarioReclamo> getComentarios() {
+        return List.copyOf(Comentarios);
+    }
+    public void agregarComentario(ComentarioReclamo comentario){
+        if (comentario != null && !Comentarios.contains(comentario)) {
+            Comentarios.add(comentario);
+        }
     }
 }
