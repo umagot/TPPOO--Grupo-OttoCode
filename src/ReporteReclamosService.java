@@ -11,4 +11,7 @@ public class ReporteReclamosService {
     public Object generarReporteEquiposFueraServicio() {
         return null;
     }
+
+    public ReporteReclamosService() {
+    }
 }

@@ -10,4 +10,7 @@ public class ControladorReclamo {
 
     public void actualizarEstado(int idReclamo, Estado estado) {
     }
+
+    public ControladorReclamo() {
+    }
 }
