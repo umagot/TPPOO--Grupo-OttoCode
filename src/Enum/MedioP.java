@@ -1,0 +1,5 @@
+package Enum;
+
+public enum MedioP {
+    EFECTIVO, TARJETA_CREDITO, TARJETA_DEBITO, TRANSFERENCIA
+}

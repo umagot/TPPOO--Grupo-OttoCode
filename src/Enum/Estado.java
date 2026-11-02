@@ -1,0 +1,5 @@
+package Enum;
+
+public enum Estado {
+    ACTIVO, INACTIVO, FUERA_DE_SERVICIO, PENDIENTE, PAGADO, EN_REPARACION
+}

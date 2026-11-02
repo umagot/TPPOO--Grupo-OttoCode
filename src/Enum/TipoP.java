@@ -1,0 +1,5 @@
+package Enum;
+
+public enum TipoP {
+    OPERATIVO, SEGURIDAD, MANTENIMIENTO, ADMINISTRATIVO
+}
