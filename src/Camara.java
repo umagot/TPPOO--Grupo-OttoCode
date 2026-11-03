@@ -1,30 +1,33 @@
-import java.util.Date;
-import java.util.List;
-import Enum.Estado;
+
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Camara extends Equipo {
     private String resolucion;
     private int diasGrabacion;
 
-    public String getResolucion() {
-        return resolucion;
-    }
-
-    public void setResolucion(String resolucion) {
-        this.resolucion = resolucion;
-    }
-
-    public int getDiasGrabacion() {
-        return diasGrabacion;
-    }
-
-    public void setDiasGrabacion(int diasGrabacion) {
-        this.diasGrabacion = diasGrabacion;
-    }
-
-    public Camara(int idEquipo, String tipo, String sector, Date fecha, Estado estado, List<Falla> fallas, List<OrdenDeMantenimiento> ordenesMantenimiento, String resolucion, int diasGrabacion) {
-        super(idEquipo, tipo, sector, fecha, estado, fallas, ordenesMantenimiento);
+    public Camara(int idEquipo, String sector, LocalDate fechaInstalacion, String resolucion, int diasGrabacion) {
+        super(idEquipo, "CAMARA", sector, fechaInstalacion);
         this.resolucion = resolucion;
         this.diasGrabacion = diasGrabacion;
     }
+
+    @Override
+    public Prioridad calcularPrioridadMantenimiento(int fallasActivasEnSector) {
+        // Regla: Una falla en una cámara genera una orden de mantenimiento de prioridad alta
+        return Prioridad.ALTA;
+    }
+
+    @Override
+    public boolean requiereAlertaAdministrador(LocalDateTime fechaActual) {
+        // Regla: Si una cámara está sin funcionar más de 48 horas, se informa al administrador
+        if (getEstado() != EstadoEquipo.OPERATIVO && getFechaInicioInactividad() != null) {
+            return Duration.between(getFechaInicioInactividad(), fechaActual).toHours() > 48;
+        }
+        return false;
+    }
+
+    public String getResolucion() { return resolucion; }
+    public int getDiasGrabacion() { return diasGrabacion; }
 }

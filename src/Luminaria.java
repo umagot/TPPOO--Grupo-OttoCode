@@ -1,31 +1,36 @@
-import Enum.TipoL;
-import Enum.Estado;
-import java.util.Date;
-import java.util.List;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Luminaria extends Equipo {
-    private TipoL tipoLampara;
+    private TipoLampara tipoLampara;
     private String potencia;
 
-    public TipoL getTipoLampara() {
-        return tipoLampara;
-    }
-
-    public void setTipoLampara(TipoL tipoLampara) {
+    public Luminaria(int idEquipo, String sector, LocalDate fechaInstalacion, TipoLampara tipoLampara, String potencia) {
+        super(idEquipo, "LUMINARIA", sector, fechaInstalacion);
         this.tipoLampara = tipoLampara;
-    }
-
-    public String getPotencia() {
-        return potencia;
-    }
-
-    public void setPotencia(String potencia) {
         this.potencia = potencia;
     }
 
-    public Luminaria(int idEquipo, String tipo, String sector, Date fecha, Estado estado, List<Falla> fallas, List<OrdenDeMantenimiento> ordenesMantenimiento, TipoL tipoLampara, String potencia) {
-        super(idEquipo, tipo, sector, fecha, estado, fallas, ordenesMantenimiento);
+    @Override
+    public Prioridad calcularPrioridadMantenimiento(int fallasActivasEnSector) {
+        // Regla: Prioridad normal, que pasa a alta si fallan más de 3 luminarias del mismo sector
+        return (fallasActivasEnSector > 3) ? Prioridad.ALTA : Prioridad.NORMAL;
+    }
+
+    @Override
+    public boolean requiereAlertaAdministrador(LocalDateTime fechaActual) {
+        return false;
+    }
+
+    public TipoLampara getTipoLampara() { return tipoLampara; }
+    public String getPotencia() { return potencia; }
+
+    public void setTipoLampara(TipoLampara tipoLampara) {
         this.tipoLampara = tipoLampara;
+    }
+
+    public void setPotencia(String potencia) {
         this.potencia = potencia;
     }
 }

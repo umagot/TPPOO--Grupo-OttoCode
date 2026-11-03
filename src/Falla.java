@@ -1,12 +1,24 @@
-import java.util.Date;
+
+
+import java.time.LocalDateTime;
 
 public class Falla {
     private int idFalla;
     private int idEquipo;
-    private Date fechaRegistro;
+    private LocalDateTime fechaRegistro;
     private String descripcion;
     private Equipo equipo;
-    private OrdenDeMantenimiento ordenMantenimiento;
+    private OrdenMantenimiento ordenMantenimiento;
+
+    public Falla(int idFalla, int idEquipo, LocalDateTime fechaRegistro, String descripcion) {
+        this.idFalla = idFalla;
+        this.idEquipo = equipo.getIdEquipo();
+        this.fechaRegistro = fechaRegistro;
+        this.descripcion = descripcion;
+        this.equipo = equipo;
+        this.ordenMantenimiento = null;
+    }
+
 
     public int getIdFalla() {
         return idFalla;
@@ -24,11 +36,11 @@ public class Falla {
         this.idEquipo = idEquipo;
     }
 
-    public Date getFechaRegistro() {
+    public LocalDateTime getFechaRegistro() {
         return fechaRegistro;
     }
 
-    public void setFechaRegistro(Date fechaRegistro) {
+    public void setFechaRegistro(LocalDateTime fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
 
@@ -48,20 +60,12 @@ public class Falla {
         this.equipo = equipo;
     }
 
-    public OrdenDeMantenimiento getOrdenMantenimiento() {
+    public OrdenMantenimiento getOrdenMantenimiento() {
         return ordenMantenimiento;
     }
 
-    public void setOrdenMantenimiento(OrdenDeMantenimiento ordenMantenimiento) {
-        this.ordenMantenimiento = ordenMantenimiento;
-    }
-
-    public Falla(int idFalla, int idEquipo, Date fechaRegistro, String descripcion, Equipo equipo, OrdenDeMantenimiento ordenMantenimiento) {
-        this.idFalla = idFalla;
-        this.idEquipo = idEquipo;
-        this.fechaRegistro = fechaRegistro;
-        this.descripcion = descripcion;
-        this.equipo = equipo;
+    public void setOrdenMantenimiento(OrdenMantenimiento ordenMantenimiento) {
         this.ordenMantenimiento = ordenMantenimiento;
     }
 }
+
