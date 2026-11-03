@@ -10,6 +10,9 @@ public class Residente extends Persona {
     private Lote lote;
     private List<AutorizacionVisita> autorizacionesVisita;
 
+    private final List<Lote> lotes = new ArrayList<>();
+    private final list<AutorizacionVisita> autorizaciones = new ArrayList<>();
+
     public int getIdResidente() {
         return IdResidente;
     }
@@ -58,17 +61,13 @@ public class Residente extends Persona {
         this.autorizacionesVisita = autorizacionesVisita;
     }
 
-    public Residente(int idResidente, int idLote, Tipo tipoResidente, estadoR estadoReclamo, Lote lote, List<AutorizacionVisita> autorizacionesVisita) {
-        IdResidente = idResidente;
-        this.idLote = idLote;
-        this.tipoResidente = tipoResidente;
-        this.estadoReclamo = estadoReclamo;
-        this.lote = lote;
-        this.autorizacionesVisita = autorizacionesVisita;
+    public void agregarAutorizacion(AutorizacionVisita autorizacion) {
+        if (autorizacion != null && !autorizaciones.contains(autorizacion)) {
+            autorizaciones.add(autorizacion)
+                }
     }
 
-    public Residente(int idPersona, String nombre, String apellido, int dni, String telefono, String correoElectronico, int idResidente, int idLote, Tipo tipoResidente, estadoR estadoReclamo, Lote lote, List<AutorizacionVisita> autorizacionesVisita) {
-        super(idPersona, nombre, apellido, dni, telefono, correoElectronico);
+    public Residente(int idResidente, int idLote, Tipo tipoResidente, estadoR estadoReclamo, Lote lote, List<AutorizacionVisita> autorizacionesVisita) {
         IdResidente = idResidente;
         this.idLote = idLote;
         this.tipoResidente = tipoResidente;
