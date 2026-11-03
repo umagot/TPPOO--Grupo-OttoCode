@@ -58,8 +58,17 @@ public class Residente extends Persona {
         this.autorizacionesVisita = autorizacionesVisita;
     }
 
-    public Residente(int idPersona, String nombre, String apellido, int DNI, int telefono, String correo_electronico, int idResidente, int idLote, Tipo tipoResidente, estadoR estadoReclamo, Lote lote, List<AutorizacionVisita> autorizacionesVisita) {
-        super(idPersona, nombre, apellido, DNI, telefono, correo_electronico);
+    public Residente(int idResidente, int idLote, Tipo tipoResidente, estadoR estadoReclamo, Lote lote, List<AutorizacionVisita> autorizacionesVisita) {
+        IdResidente = idResidente;
+        this.idLote = idLote;
+        this.tipoResidente = tipoResidente;
+        this.estadoReclamo = estadoReclamo;
+        this.lote = lote;
+        this.autorizacionesVisita = autorizacionesVisita;
+    }
+
+    public Residente(int idPersona, String nombre, String apellido, int dni, String telefono, String correoElectronico, int idResidente, int idLote, Tipo tipoResidente, estadoR estadoReclamo, Lote lote, List<AutorizacionVisita> autorizacionesVisita) {
+        super(idPersona, nombre, apellido, dni, telefono, correoElectronico);
         IdResidente = idResidente;
         this.idLote = idLote;
         this.tipoResidente = tipoResidente;
