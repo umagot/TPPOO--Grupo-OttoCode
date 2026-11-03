@@ -1,15 +1,16 @@
 
+iimport java.time.LocalDate;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
+import Enum.Estado;
 public abstract class Equipo {
     private int idEquipo;
     private String tipo;
     private String sector; // Calles internas, accesos, espacios comunes
     private LocalDate fecha;
-    private EstadoEquipo estado;
+    private Estado estado;
     private LocalDateTime fechaInicioInactividad;
     private List<Falla> fallas;
     private List<OrdenMantenimiento> ordenes;
@@ -19,7 +20,7 @@ public abstract class Equipo {
         this.tipo = tipo;
         this.sector = sector;
         this.fecha = fechaInstalacion;
-        this.estado = EstadoEquipo.OPERATIVO;
+        this.estado = Estado.ACTIVO;
         this.fallas = new ArrayList<>();
         this.ordenes = new ArrayList<>();
     }
@@ -32,21 +33,23 @@ public abstract class Equipo {
         if (descripcion == null || descripcion.isBlank()) {
             throw new IllegalArgumentException("La descripción de la falla no puede estar vacía.");
         }
-        Falla nuevaFalla = new Falla(idFalla, this.idEquipo, fechaRegistro, descripcion);
+
+        Falla nuevaFalla = new Falla(idFalla, this, fechaRegistro, descripcion);
         this.fallas.add(nuevaFalla);
-        if (this.estado == EstadoEquipo.OPERATIVO) {
+
+        if (this.estado == Estado.ACTIVO) {
             this.fechaInicioInactividad = fechaRegistro;
         }
-        this.estado = EstadoEquipo.CON_FALLA;
+        this.estado = Estado.FUERA_DE_SERVICIO;
         return nuevaFalla;
     }
 
     public void marcarEnReparacion() {
-        this.estado = EstadoEquipo.EN_REPARACION;
+        this.estado = Estado.EN_REPARACION;
     }
 
     public void marcarOperativo() {
-        this.estado = EstadoEquipo.OPERATIVO;
+        this.estado = Estado.ACTIVO;
         this.fechaInicioInactividad = null;
     }
 
@@ -54,11 +57,13 @@ public abstract class Equipo {
         if (this.fechaInicioInactividad == null) {
             this.fechaInicioInactividad = LocalDateTime.now();
         }
-        this.estado = EstadoEquipo.FUERA_DE_SERVICIO;
+        this.estado = Estado.FUERA_DE_SERVICIO;
     }
 
-    public void agregarOrden(OrdenMantenimiento orden) {
-        this.ordenes.add(orden);
+    public void agregarOrden(OrdenMantenimiento orden){
+        if (orden != null && !ordenes.contains(orden)) {
+            this.ordenes.add(orden);
+        }
     }
 
     public int getIdEquipo() {
@@ -77,7 +82,7 @@ public abstract class Equipo {
         return fecha;
     }
 
-    public EstadoEquipo getEstado() {
+    public Estado getEstado() {
         return estado;
     }
 
@@ -86,10 +91,9 @@ public abstract class Equipo {
     }
 
     public List<Falla> getFallas() {
-        return fallas;
+        return List.copyOf(fallas);
     }
 
     public List<OrdenMantenimiento> getOrdenes() {
-        return ordenes;
+        return List.copyOf(ordenes);
     }
-}

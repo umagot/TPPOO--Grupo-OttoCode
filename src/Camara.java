@@ -2,7 +2,7 @@
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
+import Enum.Estado ;
 public class Camara extends Equipo {
     private String resolucion;
     private int diasGrabacion;
@@ -22,7 +22,7 @@ public class Camara extends Equipo {
     @Override
     public boolean requiereAlertaAdministrador(LocalDateTime fechaActual) {
         // Regla: Si una cámara está sin funcionar más de 48 horas, se informa al administrador
-        if (getEstado() != EstadoEquipo.OPERATIVO && getFechaInicioInactividad() != null) {
+        if (getEstado() != Estado.OPERATIVO && getFechaInicioInactividad() != null) {
             return Duration.between(getFechaInicioInactividad(), fechaActual).toHours() > 48;
         }
         return false;

@@ -1,12 +1,13 @@
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import Enum.TipoL;
+import Enum.Prioridad;
 
 public class Luminaria extends Equipo {
-    private TipoLampara tipoLampara;
+    private TipoL tipoLampara;
     private String potencia;
 
-    public Luminaria(int idEquipo, String sector, LocalDate fechaInstalacion, TipoLampara tipoLampara, String potencia) {
+    public Luminaria(int idEquipo, String sector, LocalDate fechaInstalacion, TipoL tipoLampara, String potencia) {
         super(idEquipo, "LUMINARIA", sector, fechaInstalacion);
         this.tipoLampara = tipoLampara;
         this.potencia = potencia;

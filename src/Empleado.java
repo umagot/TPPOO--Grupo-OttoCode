@@ -56,11 +56,12 @@ public class Empleado extends  Persona{
     }
 
     public List<OrdenMantenimiento> getOrdenesMantenimiento() {
-        return List.copyOf(ordenesMantenimiento)
+        return List.copyOf(ordenesMantenimiento);
     }
+
     public void agregarOrden(OrdenMantenimiento orden) {
         if (orden != null && !ordenesMantenimiento.contains(orden)){
-            ordenesMantenimiento.add(registrosGuardia);
+            ordenesMantenimiento.add(orden);
         }
 
     }
@@ -70,7 +71,7 @@ public class Empleado extends  Persona{
     }
     public void agregarRegistroGuardia(Registros registro){
         if (registro != null && !registrosGuardia.contains(registro)){
-            registrosGuardia.add(registro)
+            registrosGuardia.add(registro);
         }
     }
 }

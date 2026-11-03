@@ -73,10 +73,10 @@ public  abstract class Persona {
     }
 
     public List<Reclamo> getReclamos() {
-        return List.copyOf(reclamos)
+        return List.copyOf(reclamos);
     }
     public void agregarReclamo(Reclamo reclamo) {
-        if ((reclamo != null) && !reclamos.contains(reclamo) {
+        if ((reclamo != null) && !reclamos.contains(reclamo)) {
             reclamos.add(reclamo);
         }
     }
