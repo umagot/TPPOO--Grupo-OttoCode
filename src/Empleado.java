@@ -1,61 +1,76 @@
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
-import Enum.TipoP;
+import java.time.LocalDate;
 
-public class Empleado extends Persona {
-    private int Legajo;
-    private Date fechaIngreso;
-    private TipoP tipo_personal;
+public class Empleado extends  Persona{
+    private int legajo;
+    private LocalDate fechaIngreso;
+    private String tipoPersonal;
 
-    private List<OrdenDeMantenimiento> ordenesMantenimiento;
-    private List<Reclamo> reclamosAsignados;
+    private final List<Reclamo> reclamosAsignados =  new ArrayList<>();
+
+    private final List<OrdenMantenimiento> ordenesMantenimiento = new ArrayList<>();
+
+    private final List<Registros> registrosGuardia = new ArrayList<>();
+
+    public Empleado() {}
+
+    public Empleado(int idPersona, String nombre, String apellido, int dni, String telefono, String correoElectronico, int legajo, LocalDate fechaIngreso, String tipoPersonal) {
+        super(idPersona, nombre, apellido, dni, telefono, correoElectronico);
+        this.legajo = legajo;
+        this.fechaIngreso = fechaIngreso;
+        this.tipoPersonal = tipoPersonal;
+    }
 
     public int getLegajo() {
-        return Legajo;
+        return legajo;
     }
 
     public void setLegajo(int legajo) {
-        Legajo = legajo;
+        this.legajo = legajo;
     }
 
-    public Date getFechaIngreso() {
+    public LocalDate getFechaIngreso() {
         return fechaIngreso;
     }
 
-    public void setFechaIngreso(Date fechaIngreso) {
+    public void setFechaIngreso(LocalDate fechaIngreso) {
         this.fechaIngreso = fechaIngreso;
     }
 
-    public TipoP getTipo_personal() {
-        return tipo_personal;
+    public String getTipoPersonal() {
+        return tipoPersonal;
     }
 
-    public void setTipo_personal(TipoP tipo_personal) {
-        this.tipo_personal = tipo_personal;
-    }
-
-    public List<OrdenDeMantenimiento> getOrdenesMantenimiento() {
-        return ordenesMantenimiento;
-    }
-
-    public void setOrdenesMantenimiento(List<OrdenDeMantenimiento> ordenesMantenimiento) {
-        this.ordenesMantenimiento = ordenesMantenimiento;
+    public void setTipoPersonal(String tipoPersonal) {
+        this.tipoPersonal = tipoPersonal;
     }
 
     public List<Reclamo> getReclamosAsignados() {
-        return reclamosAsignados;
+        return List.copyOf(reclamosAsignados);
+    }
+    public void asignarReclamo(Reclamo reclamo) {
+        if (reclamo != null && !reclamosAsignados.contains(reclamo)){
+            reclamosAsignados.add(reclamo);
+        }
     }
 
-    public void setReclamosAsignados(List<Reclamo> reclamosAsignados) {
-        this.reclamosAsignados = reclamosAsignados;
+    public List<OrdenMantenimiento> getOrdenesMantenimiento() {
+        return List.copyOf(ordenesMantenimiento)
+    }
+    public void agregarOrden(OrdenMantenimiento orden) {
+        if (orden != null && !ordenesMantenimiento.contains(orden)){
+            ordenesMantenimiento.add(registrosGuardia);
+        }
+
     }
 
-    public Empleado(int idPersona, String nombre, String apellido, int DNI, int telefono, String correo_electronico, int legajo, Date fechaIngreso, TipoP tipo_personal, List<OrdenDeMantenimiento> ordenesMantenimiento, List<Reclamo> reclamosAsignados) {
-        super(idPersona, nombre, apellido, DNI, telefono, correo_electronico);
-        Legajo = legajo;
-        this.fechaIngreso = fechaIngreso;
-        this.tipo_personal = tipo_personal;
-        this.ordenesMantenimiento = ordenesMantenimiento;
-        this.reclamosAsignados = reclamosAsignados;
+    public List<Registros> getRegistrosGuardia() {
+        return List.copyOf(registrosGuardia);
+    }
+    public void agregarRegistroGuardia(Registros registro){
+        if (registro != null && !registrosGuardia.contains(registro)){
+            registrosGuardia.add(registro)
+        }
     }
 }
