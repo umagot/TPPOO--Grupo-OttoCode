@@ -1,10 +1,10 @@
-
-iimport java.time.LocalDate;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import Enum.Estado;
+import Enum.Prioridad;
+
 public abstract class Equipo {
     private int idEquipo;
     private String tipo;
@@ -60,7 +60,7 @@ public abstract class Equipo {
         this.estado = Estado.FUERA_DE_SERVICIO;
     }
 
-    public void agregarOrden(OrdenMantenimiento orden){
+    public void agregarOrden(OrdenMantenimiento orden) {
         if (orden != null && !ordenes.contains(orden)) {
             this.ordenes.add(orden);
         }
@@ -97,3 +97,4 @@ public abstract class Equipo {
     public List<OrdenMantenimiento> getOrdenes() {
         return List.copyOf(ordenes);
     }
+}
