@@ -1,10 +1,11 @@
 import java.util.Date;
+import Enum.Prioridad;
 
 public class OrdenMantenimiento {
     private int idOrden;
     private int idEquipo;
     private int idEmpleado;
-    private int prioridad;
+    private Prioridad prioridad;
     private Date fechaApertura;
     private String descripcion;
     private Date fechaCierre;
@@ -12,19 +13,22 @@ public class OrdenMantenimiento {
     private Empleado empleado;
     private Falla falla;
 
-    public OrdenMantenimiento(int idOrden, int idEquipo, int idEmpleado, int prioridad, Date fechaApertura, String descripcion, Date fechaCierre) {
+    public OrdenMantenimiento(int idOrden, Prioridad prioridad, Date fechaApertura, String descripcion, Equipo equipo, Empleado empleado, Falla falla) {
         this.idOrden = idOrden;
-        this.idEquipo = idEquipo;
-        this.idEmpleado = idEmpleado;
+        this.idEquipo = equipo.getIdEquipo();
+        this.idEmpleado = empleado.getLegajo();
         this.prioridad = prioridad;
         this.fechaApertura = fechaApertura;
         this.descripcion = descripcion;
         this.fechaCierre = fechaCierre;
+
         this.equipo =equipo;
         this.empleado = empleado;
         this.falla = falla;
 
     }
+
+
 
     public int getIdOrden() {
         return idOrden;
@@ -50,11 +54,11 @@ public class OrdenMantenimiento {
         this.idEmpleado = idEmpleado;
     }
 
-    public int getPrioridad() {
+    public Prioridad getPrioridad() {
         return prioridad;
     }
 
-    public void setPrioridad(int prioridad) {
+    public void setPrioridad(Prioridad prioridad) {
         this.prioridad = prioridad;
     }
 

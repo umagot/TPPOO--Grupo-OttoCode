@@ -75,6 +75,7 @@ public class Lote {
                 autorizacion.setLote(this);
             }
         }
+    }
 
     public Lote(int id_Lote, int superficie, int idTitular, List<Residente> residentes, List<Expensa> expensas, List<Reclamo> reclamos, List<AutorizacionVisita> autorizaciones) {
         this.id_Lote = id_Lote;

@@ -16,7 +16,7 @@ public class Luminaria extends Equipo {
     @Override
     public Prioridad calcularPrioridadMantenimiento(int fallasActivasEnSector) {
         // Regla: Prioridad normal, que pasa a alta si fallan más de 3 luminarias del mismo sector
-        return (fallasActivasEnSector > 3) ? Prioridad.ALTA : Prioridad.NORMAL;
+        return (fallasActivasEnSector > 3) ? Prioridad.ALTA : Prioridad.MEDIA;
     }
 
     @Override
@@ -24,10 +24,10 @@ public class Luminaria extends Equipo {
         return false;
     }
 
-    public TipoLampara getTipoLampara() { return tipoLampara; }
+    public TipoL getTipoLampara() { return tipoLampara; }
     public String getPotencia() { return potencia; }
 
-    public void setTipoLampara(TipoLampara tipoLampara) {
+    public void setTipoLampara(TipoL tipoLampara) {
         this.tipoLampara = tipoLampara;
     }
 
