@@ -10,7 +10,7 @@ public class Falla {
     private Equipo equipo;
     private OrdenMantenimiento ordenMantenimiento;
 
-    public Falla(int idFalla, int idEquipo, LocalDateTime fechaRegistro, String descripcion) {
+    public Falla(int idFalla, Equipo equipo, LocalDateTime fechaRegistro, String descripcion) {
         this.idFalla = idFalla;
         this.idEquipo = equipo.getIdEquipo();
         this.fechaRegistro = fechaRegistro;
