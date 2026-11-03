@@ -66,6 +66,16 @@ public class Lote {
         this.autorizaciones = autorizaciones;
     }
 
+    public void agregarAutorizacion(AutorizacionVisita autorizacion) {
+        if (autorizacion != null
+                && !autorizaciones.contains(autorizacion)) {
+            autorizaciones.add(autorizacion);
+
+            if (autorizacion.getLote() != this) {
+                autorizacion.setLote(this);
+            }
+        }
+
     public Lote(int id_Lote, int superficie, int idTitular, List<Residente> residentes, List<Expensa> expensas, List<Reclamo> reclamos, List<AutorizacionVisita> autorizaciones) {
         this.id_Lote = id_Lote;
         Superficie = superficie;
