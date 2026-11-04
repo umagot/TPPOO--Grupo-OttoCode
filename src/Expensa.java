@@ -2,6 +2,7 @@ import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 import Enum.Estado;
+import Enum.MedioP;
 
 public class Expensa {
     private int idExpensa;
@@ -15,11 +16,16 @@ public class Expensa {
     private List<Pago> pagos = new ArrayList<>();
 
     public double calcularTotalPagado() {
-        return 0.0;
+        double total = 0;
+
+        for(Pago pago : pago) {
+            total+= pago.getImporte()
+        }
+        return total;
     }
 
     public double calcularSaldoPendiente() {
-        return 0.0;
+        return importe - calcularTotalPagado();
     }
 
     public Pago crearPago(String datos) {
@@ -117,5 +123,10 @@ public class Expensa {
          if (importe > calcularSaldoPendiente()) {
              throw new IllegalArgumentException("El pago supera el saldo pendiente.");
         }
-     }           
+         Pago nuevoPago = new Pago(idPago, idExpensa,fecha,importe,medioPago,interes,this);
+
+    agregarPago(nuevoPago);
+
+    return nuevoPago;
+    }           
 }
