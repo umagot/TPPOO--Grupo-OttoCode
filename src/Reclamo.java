@@ -104,6 +104,8 @@ public class Reclamo {
         this.historial = historial;
     }
 
+    
+
     public List<ComentarioReclamo> getComentarios() {
         return comentarios;
     }
@@ -111,6 +113,28 @@ public class Reclamo {
     public void setComentarios(List<ComentarioReclamo> comentarios) {
         this.comentarios = comentarios;
     }
+
+    public void agregarComentario(ComentarioReclamo comentario) {
+        if (comentario != null && !comentarios.contains(comentario)) {
+            comentarios.add(comentario);
+
+            if (comentario.getReclamo() != this) {
+                comentario.setReclamo(this);
+            }
+        }
+    }
+    public void agregarHistorial(
+            HistorialEstadoReclamo historialEstado) {
+        if (historialEstado != null
+                && !historial.contains(historialEstado)) {
+            historial.add(historialEstado);
+
+            if (historialEstado.getReclamo() != this) {
+                historialEstado.setReclamo(this);
+            }
+        }
+    }
+
 
     public Reclamo(int idReclamo, int idPersona, Date fecha, String descripcion, TipoP tipo, int idLote, int idEmpleado, Persona persona, Lote lote, Empleado empleado, List<HistorialEstadoReclamo> historial, List<ComentarioReclamo> comentarios) {
         this.idReclamo = idReclamo;
