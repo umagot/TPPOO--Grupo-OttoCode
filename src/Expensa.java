@@ -11,7 +11,7 @@ public class Expensa {
     private String periodo;
 
     private Lote lote;
-    private List<Pago> pagos;
+    private List<Pago> pagos = new ArrayList=<>();
 
     public double calcularTotalPagado() {
         return 0.0;
@@ -99,4 +99,22 @@ public class Expensa {
         this.lote = lote;
         this.pagos = pagos;
     }
+    public void agregarPago(Pago pago) {
+        if (pago != null && !pagos.contains(pago)) {
+            pagos.add(pago);
+
+            if (pago.getExpensa() != this) {
+                pago.setExpensa(this);
+            }
+        }
+    }
+        
+     public Pago crearPago(int idPago, LocalDate fecha, int importe, String medioPago, double tasaInteresDiaria) {
+         if (importe <= 0) {
+             throw new IllegalArgumentException("El importe debe ser positivo.");
+        }
+         if (importe > calcularSaldoPendiente()) {
+             throw new IllegalArgumentException("El pago supera el saldo pendiente.");
+        }
+     }           
 }
