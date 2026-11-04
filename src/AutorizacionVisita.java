@@ -61,7 +61,14 @@ public class AutorizacionVisita {
     public void setFechaHoraInicio(Date fechaingreso) {
         this.fechaHoraInicio = fechaingreso;
     }
+    public Date getFechaHoraFin() {
+    return fechaHoraFin;
+    }
 
+public void setFechaHoraFin(Date fechaHoraFin) {
+    this.fechaHoraFin = fechaHoraFin;
+    }
+    
     public boolean isEsProveedor() {
         return esProveedor;
     }
