@@ -89,7 +89,12 @@ public class Lote {
         } else {
             this.reclamos = new ArrayList<>(reclamos);
         };
-        this.autorizaciones = autorizaciones;
+        if (autorizaciones == null) {
+            this.autorizaciones = new ArrayList<>();
+        } else {
+            this.autorizaciones = new ArrayList<>(autorizaciones);
+        }
+        
     }
 
     public void agregarReclamo(Reclamo reclamo) {
