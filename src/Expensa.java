@@ -1,4 +1,5 @@
 import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 import Enum.Estado;
 
@@ -11,7 +12,7 @@ public class Expensa {
     private String periodo;
 
     private Lote lote;
-    private List<Pago> pagos = new ArrayList=<>();
+    private List<Pago> pagos = new ArrayList<>();
 
     public double calcularTotalPagado() {
         return 0.0;
@@ -109,7 +110,7 @@ public class Expensa {
         }
     }
         
-     public Pago crearPago(int idPago, LocalDate fecha, int importe, String medioPago, double tasaInteresDiaria) {
+     public Pago crearPago(int idPago, Date fecha, int importe, String medioPago, double tasaInteresDiaria) {
          if (importe <= 0) {
              throw new IllegalArgumentException("El importe debe ser positivo.");
         }
