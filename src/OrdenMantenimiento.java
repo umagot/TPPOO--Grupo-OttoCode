@@ -20,7 +20,7 @@ public class OrdenMantenimiento {
         this.prioridad = prioridad;
         this.fechaApertura = fechaApertura;
         this.descripcion = descripcion;
-        this.fechaCierre = fechaCierre;
+        this.fechaCierre = null;
 
         this.equipo =equipo;
         this.empleado = empleado;
@@ -108,5 +108,8 @@ public class OrdenMantenimiento {
 
     public void setFalla(Falla falla) {
         this.falla = falla;
+    }
+
+    public void setDescripcionReparacion(String descripcionReparacion) {
     }
 }

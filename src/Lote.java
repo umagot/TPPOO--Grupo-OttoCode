@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.ArrayList;
 
 public class Lote {
     private int id_Lote;
@@ -83,7 +84,21 @@ public class Lote {
         this.idTitular = idTitular;
         this.residentes = residentes;
         this.expensas = expensas;
-        this.reclamos = reclamos;
+        if (reclamos == null) {
+            this.reclamos = new ArrayList<>();
+        } else {
+            this.reclamos = new ArrayList<>(reclamos);
+        };
         this.autorizaciones = autorizaciones;
+    }
+
+    public void agregarReclamo(Reclamo reclamo) {
+        if (reclamo != null && !reclamos.contains(reclamo)) {
+            reclamos.add(reclamo);
+
+            if (reclamo.getLote() != this) {
+                reclamo.setLote(this);
+            }
+        }
     }
 }

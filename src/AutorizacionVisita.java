@@ -7,7 +7,8 @@ public class AutorizacionVisita {
     private int idResidente;
     private String nombre;
     private int DNI;
-    private Date fechaingreso;
+    private Date fechaHoraInicio;
+    private Date fechaHoraFin;
     private boolean esProveedor;
     private Lote lote;
     private Residente residente;
@@ -53,12 +54,12 @@ public class AutorizacionVisita {
         this.DNI = DNI;
     }
 
-    public Date getFechaingreso() {
-        return fechaingreso;
+    public Date getFechaHoraInicio() {
+        return fechaHoraInicio;
     }
 
-    public void setFechaingreso(Date fechaingreso) {
-        this.fechaingreso = fechaingreso;
+    public void setFechaHoraInicio(Date fechaingreso) {
+        this.fechaHoraInicio = fechaingreso;
     }
 
     public boolean isEsProveedor() {
@@ -99,7 +100,7 @@ public class AutorizacionVisita {
         this.idResidente = idResidente;
         this.nombre = nombre;
         this.DNI = DNI;
-        this.fechaingreso = fechaingreso;
+        this.fechaHoraInicio = fechaingreso;
         this.esProveedor = esProveedor;
         this.lote = lote;
         this.residente = residente;

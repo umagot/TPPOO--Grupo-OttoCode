@@ -1,10 +1,10 @@
 import java.util.Date;
-import Enum.Estado;
+import Enum.EstadoReclamo;
 
     public class HistorialEstadoReclamo {
         private int idHistorial;
         private int idReclamo;
-        private Estado nuevoEstado;
+        private EstadoReclamo nuevoEstado;
         private Date fechaCambio;
         private String Observacion;
         private Reclamo reclamo;
@@ -25,11 +25,11 @@ import Enum.Estado;
             this.idReclamo = idReclamo;
         }
 
-        public Estado getNuevoEstado() {
+        public EstadoReclamo getNuevoEstado() {
             return nuevoEstado;
         }
 
-        public void setNuevoEstado(Estado nuevoEstado) {
+        public void setNuevoEstado(EstadoReclamo nuevoEstado) {
             this.nuevoEstado = nuevoEstado;
         }
 
@@ -57,7 +57,7 @@ import Enum.Estado;
             this.reclamo = reclamo;
         }
 
-        public HistorialEstadoReclamo(int idHistorial, int idReclamo, Estado nuevoEstado, Date fechaCambio, String observacion, Reclamo reclamo) {
+        public HistorialEstadoReclamo(int idHistorial, int idReclamo, EstadoReclamo nuevoEstado, Date fechaCambio, String observacion, Reclamo reclamo) {
             this.idHistorial = idHistorial;
             this.idReclamo = idReclamo;
             this.nuevoEstado = nuevoEstado;
