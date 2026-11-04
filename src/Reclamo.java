@@ -1,8 +1,6 @@
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import Enum.TipoP;
-import Enum.EstadoReclamo;
 
 public class Reclamo {
     private int idReclamo;
@@ -17,7 +15,6 @@ public class Reclamo {
     private Empleado empleado;
     private List<HistorialEstadoReclamo> historial;
     private List<ComentarioReclamo> comentarios;
-    private EstadoReclamo estadoActual;
 
     public int getIdReclamo() {
         return idReclamo;
@@ -115,14 +112,6 @@ public class Reclamo {
         this.comentarios = comentarios;
     }
 
-    public EstadoReclamo getEstadoActual() {
-        return estadoActual;
-    }
-
-    public void setEstadoActual(EstadoReclamo estadoActual) {
-        this.estadoActual = estadoActual;
-    }
-
     public Reclamo(int idReclamo, int idPersona, Date fecha, String descripcion, TipoP tipo, int idLote, int idEmpleado, Persona persona, Lote lote, Empleado empleado, List<HistorialEstadoReclamo> historial, List<ComentarioReclamo> comentarios) {
         this.idReclamo = idReclamo;
         this.idPersona = idPersona;
@@ -134,27 +123,7 @@ public class Reclamo {
         this.persona = persona;
         this.lote = lote;
         this.empleado = empleado;
-
-        ///??????? NO se is va bien
-        if (historial == null) {
-            this.historial = new ArrayList<>();
-        } else {
-            this.historial = new ArrayList<>(historial);
-        }
-        if (comentarios == null) {
-            this.comentarios = new ArrayList<>();
-        } else {
-            this.comentarios = new ArrayList<>(comentarios);
-        }
-    }
-
-    public void agregarHistorial(HistorialEstadoReclamo historialEstado) {
-        if (historialEstado != null && !historial.contains(historialEstado)) {
-            historial.add(historialEstado);
-
-            if (historialEstado.getReclamo() != this) {
-                historialEstado.setReclamo(this);
-            }
-        }
+        this.historial = historial;
+        this.comentarios = comentarios;
     }
 }
