@@ -56,6 +56,42 @@ public class Registros {
         this.autorizacionVisita = autorizacionVisita;
     }
 
+
+    public void registrarIngreso(Date horaIngreso) {
+    if (horaIngreso == null) {
+        throw new IllegalArgumentException("La hora de ingreso no puede ser nula");
+    }
+
+    if (this.horaingreso != null) {
+        throw new IllegalStateException("El ingreso ya fue registrado");
+    }
+
+    this.horaingreso = horaIngreso;
+}
+    public void registrarSalida(Date horaSalida) {
+    if (horaSalida == null) {
+        throw new IllegalArgumentException("La hora de salida no puede ser nula");
+    }
+
+    if (this.horaingreso == null) {
+        throw new IllegalStateException("Primero debe registrarse el ingreso");
+    }
+
+    if (horaSalida.before(this.horaingreso)) {
+        throw new IllegalArgumentException("La salida no puede ser anterior al ingreso");
+    }
+
+    if (this.horaSalida != null) {
+        throw new IllegalStateException("La salida ya fue registrada");
+    }
+
+    this.horaSalida = horaSalida;
+}
+
+
+
+    
+
     public Registros(int idAcceso, int idAutorizacion, int idGuardia, Date horaingreso, Date horaSalida, AutorizacionVisita autorizacionVisita) {
         this.idAcceso = idAcceso;
         this.idAutorizacion = idAutorizacion;
