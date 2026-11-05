@@ -1,6 +1,7 @@
 import java.util.List;
 import Enum.Tipo;
 import Enum.estadoR;
+import java.util.ArrayList;
 
 public class Residente extends Persona {
     private int IdResidente;
@@ -8,7 +9,7 @@ public class Residente extends Persona {
     private Tipo tipoResidente;
     private estadoR estadoReclamo;
     private Lote lote;
-    private List<AutorizacionVisita> autorizacionesVisita;
+    private List<AutorizacionVisita> autorizacionesVisita = new ArrayList<>();
 
     public int getIdResidente() {
         return IdResidente;
@@ -48,24 +49,22 @@ public class Residente extends Persona {
 
     public void setLote(Lote lote) {
         this.lote = lote;
+
+        if (lote != null) {
+            this.idLote = lote.getId_Lote();
+        }
     }
 
     public List<AutorizacionVisita> getAutorizacionesVisita() {
         return autorizacionesVisita;
     }
 
-    public void setAutorizacionesVisita(List<AutorizacionVisita> autorizacionesVisita) {
-        this.autorizacionesVisita = autorizacionesVisita;
+    public void agregarAutorizacion(AutorizacionVisita autorizacion) {
+    if (autorizacion != null && !autorizacionesVisita.contains(autorizacion)) {
+        autorizacionesVisita.add(autorizacion);
     }
+}
 
-    public Residente(int idResidente, int idLote, Tipo tipoResidente, estadoR estadoReclamo, Lote lote, List<AutorizacionVisita> autorizacionesVisita) {
-        IdResidente = idResidente;
-        this.idLote = idLote;
-        this.tipoResidente = tipoResidente;
-        this.estadoReclamo = estadoReclamo;
-        this.lote = lote;
-        this.autorizacionesVisita = autorizacionesVisita;
-    }
 
     public Residente(int idPersona, String nombre, String apellido, int dni, String telefono, String correoElectronico, int idResidente, int idLote, Tipo tipoResidente, estadoR estadoReclamo, Lote lote, List<AutorizacionVisita> autorizacionesVisita) {
         super(idPersona, nombre, apellido, dni, telefono, correoElectronico);
