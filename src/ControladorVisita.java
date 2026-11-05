@@ -112,6 +112,81 @@ public class ControladorVisita {
             listaResidente = new ArrayList<>(listaResidente);
         }
 
+        // 4. REGISTRAR EL INGRESO DE UNA VISITA
+public Registros registrarIngreso(
+        int idAcceso,
+        int idAutorizacion,
+        int idGuardia) {
+
+    // Buscar la autorización
+    AutorizacionVisita autorizacion =
+            buscarAutorizacion(idAutorizacion);
+
+    if (autorizacion == null) {
+        throw new IllegalArgumentException(
+                "No existe esa autorización."
+        );
+    }
+
+    // Comprobar que esté vigente
+    if (!estaAutorizada(idAutorizacion)) {
+        throw new IllegalStateException(
+                "La visita no está autorizada en este momento."
+        );
+    }
+
+    // Crear el registro sin hora de ingreso ni salida
+    Registros registro = new Registros(
+            idAcceso,
+            idAutorizacion,
+            idGuardia,
+            null,
+            null,
+            autorizacion
+    );
+
+    // Registrar la hora actual
+    registro.registrarIngreso(new Date());
+
+    // Asociar el registro a la autorización
+    autorizacion.getRegistros().add(registro);
+
+    return registro;
+}
+        // 5. REGISTRAR LA SALIDA DE UNA VISITA
+public void registrarSalida(int idAutorizacion) {
+
+    AutorizacionVisita autorizacion =
+            buscarAutorizacion(idAutorizacion);
+
+    if (autorizacion == null) {
+        throw new IllegalArgumentException(
+                "No existe esa autorización."
+        );
+    }
+
+    List<Registros> registros = autorizacion.getRegistros();
+
+    // Buscar un ingreso que todavía no tenga salida
+    for (Registros registro : registros) {
+
+        if (registro.getHoraingreso() != null
+                && registro.getHoraSalida() == null) {
+
+            registro.registrarSalida(new Date());
+            return;
+        }
+    }
+
+    throw new IllegalStateException(
+            "No hay ningún ingreso pendiente de salida."
+    );
+}
+
+
+
+        
+
         listaResidente.add(autorizacion);
         residente.setAutorizacionesVisita(listaResidente);
 
