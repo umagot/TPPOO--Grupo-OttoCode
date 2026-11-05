@@ -10,6 +10,7 @@ public class ControladorReclamo {
 
     private List<Reclamo> reclamos;
     private List<Empleado> empleados;
+    private int siguienteIdHistorial = 1;
 
 
     // Constructor principal
@@ -26,6 +27,7 @@ public class ControladorReclamo {
         } else {
             this.empleados = new ArrayList<>(empleados);
         }
+
     }
 
     // Constructor sin parámetros

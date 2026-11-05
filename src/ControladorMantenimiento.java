@@ -38,8 +38,10 @@ public class ControladorMantenimiento {
 
         if (equipo instanceof Luminaria) {
             for (Equipo e : equipos) {
-                if (e instanceof Luminaria && e.getSector().equals(equipo.getSector())  && e.getEstado() != Estado.ACTIVO) {
 
+                if (e instanceof Luminaria
+                        && e.getSector().equals(equipo.getSector())
+                        && e.getEstado() == Estado.FUERA_DE_SERVICIO) {
                     fallasActivasEnSector++;
                 }
             }

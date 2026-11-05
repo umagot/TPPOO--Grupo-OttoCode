@@ -126,4 +126,19 @@ public class Reclamo {
         this.historial = historial;
         this.comentarios = comentarios;
     }
+
+    public void agregarHistorial(HistorialEstadoReclamo nuevoHistorial) {
+        if (nuevoHistorial == null) {
+            throw new IllegalArgumentException("El historial no puede ser nulo.");
+        }
+        historial.add(nuevoHistorial);
+    }
+
+    public void agregarComentario(ComentarioReclamo nuevoComentario) {
+        if (nuevoComentario == null) {
+            throw new IllegalArgumentException("El comentario no puede ser nulo.");
+        }
+
+        comentarios.add(nuevoComentario);
+    }
 }

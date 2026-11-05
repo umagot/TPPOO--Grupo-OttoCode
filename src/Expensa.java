@@ -18,18 +18,14 @@ public class Expensa {
     public double calcularTotalPagado() {
         double total = 0;
 
-        for(Pago pago : pago) {
-            total+= pago.getImporte()
+        for(Pago pago : pagos) {
+            total+= pago.getImporte();
         }
         return total;
     }
 
     public double calcularSaldoPendiente() {
         return importe - calcularTotalPagado();
-    }
-
-    public Pago crearPago(String datos) {
-        return null;
     }
 
     public int getIdExpensa() {
@@ -116,7 +112,7 @@ public class Expensa {
         }
     }
         
-     public Pago crearPago(int idPago, Date fecha, int importe, String medioPago, double tasaInteresDiaria) {
+     public Pago crearPago(int idPago, Date fecha, int importe, MedioP medioPago, double tasaInteresDiaria) {
          if (importe <= 0) {
              throw new IllegalArgumentException("El importe debe ser positivo.");
         }
