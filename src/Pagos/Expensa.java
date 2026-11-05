@@ -1,8 +1,11 @@
+package Pagos;
+
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 import Enum.Estado;
 import Enum.MedioP;
+import Lotes.Lote;
 
 public class Expensa {
     private int idExpensa;

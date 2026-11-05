@@ -1,5 +1,8 @@
+package Pagos;
+
 import java.util.Date;
 import Enum.MedioP;
+
 public class Pago {
     private int idPago;
     private int idExpensa;

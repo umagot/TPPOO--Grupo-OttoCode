@@ -1,7 +1,10 @@
+package Mantenimiento;
+
 import java.util.Date;
 import java.util.List;
 import Enum.Estado;
 import Enum.Prioridad;
+import Lotes.Empleado;
 
 public class ControladorMantenimiento {
 

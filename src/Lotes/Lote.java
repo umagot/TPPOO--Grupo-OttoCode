@@ -1,3 +1,9 @@
+package Lotes;
+
+import Pagos.Expensa;
+import Reclamos.Reclamo;
+import Visitas_Y_Accesos.AutorizacionVisita;
+
 import java.util.List;
 import java.util.ArrayList;
 

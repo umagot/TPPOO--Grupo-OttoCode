@@ -1,3 +1,8 @@
+package Lotes;
+
+import Reclamos.ComentarioReclamo;
+import Reclamos.Reclamo;
+
 import java.util.ArrayList;
 import java.util.List;
 

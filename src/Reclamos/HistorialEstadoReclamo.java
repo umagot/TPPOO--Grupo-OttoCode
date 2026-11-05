@@ -1,7 +1,9 @@
+package Reclamos;
+
 import java.util.Date;
 import Enum.EstadoReclamo;
 
-    public class HistorialEstadoReclamo {
+public class HistorialEstadoReclamo {
         private int idHistorial;
         private int idReclamo;
         private EstadoReclamo nuevoEstado;

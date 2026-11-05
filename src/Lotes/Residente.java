@@ -1,6 +1,10 @@
+package Lotes;
+
 import java.util.List;
 import Enum.Tipo;
 import Enum.estadoR;
+import Visitas_Y_Accesos.AutorizacionVisita;
+
 import java.util.ArrayList;
 
 public class Residente extends Persona {

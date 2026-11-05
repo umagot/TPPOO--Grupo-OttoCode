@@ -1,6 +1,11 @@
+package Reclamos;
+
 import java.util.Date;
 import java.util.List;
 import Enum.TipoP;
+import Lotes.Empleado;
+import Lotes.Lote;
+import Lotes.Persona;
 
 public class Reclamo {
     private int idReclamo;

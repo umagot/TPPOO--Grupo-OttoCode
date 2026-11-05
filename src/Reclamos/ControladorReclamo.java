@@ -1,3 +1,4 @@
+package Reclamos;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -5,6 +6,9 @@ import java.util.List;
 
 import Enum.EstadoReclamo;
 import Enum.TipoP;
+import Lotes.Empleado;
+import Lotes.Lote;
+import Lotes.Residente;
 
 public class ControladorReclamo {
 
@@ -94,7 +98,7 @@ public class ControladorReclamo {
         registrarHistorial(
                 reclamo,
                 EstadoReclamo.ABIERTO,
-                "Reclamo registrado."
+                "Reclamos.Reclamo registrado."
         );
 
         return reclamo;
@@ -127,7 +131,7 @@ public class ControladorReclamo {
         actualizarEstado(
                 idReclamo,
                 EstadoReclamo.ASIGNADO,
-                "Reclamo asignado a un empleado."
+                "Reclamos.Reclamo asignado a un empleado."
         );
     }
 

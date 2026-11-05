@@ -1,8 +1,14 @@
+package Lotes;
+
+import Mantenimiento.OrdenMantenimiento;
+import Reclamos.Reclamo;
+import Visitas_Y_Accesos.Registros;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
 
-public class Empleado extends  Persona{
+public class Empleado extends Persona {
     private int legajo;
     private LocalDate fechaIngreso;
     private String tipoPersonal;

@@ -1,3 +1,6 @@
+package Reclamos;
+
+import Lotes.Persona;
 import java.util.Date;
 
 public class ComentarioReclamo {

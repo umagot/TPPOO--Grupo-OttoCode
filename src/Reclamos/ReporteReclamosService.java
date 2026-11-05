@@ -1,3 +1,4 @@
+package Reclamos;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -5,6 +6,8 @@ import java.util.List;
 
 import Enum.Estado;
 import Enum.EstadoReclamo;
+import Mantenimiento.Equipo;
+import Pagos.Expensa;
 
 public class ReporteReclamosService {
 
@@ -81,4 +84,4 @@ public class ReporteReclamosService {
     }
 }
 
-}
+
