@@ -1,5 +1,5 @@
 package Reclamos;
-
+import Datos.GestorArchivos;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,28 +11,34 @@ import Lotes.Lote;
 import Lotes.Persona;
 import Lotes.Residente;
 
+
 public class ControladorReclamo {
 
+    private final String RUTA_ARCHIVO = "reclamos.txt";
     private List<Reclamo> reclamos;
     private List<Empleado> empleados;
     private int siguienteIdHistorial = 1;
 
 
     // Constructor principal
-    public ControladorReclamo(List<Reclamo> reclamos, List<Empleado> empleados) {
+    public ControladorReclamo(List<Empleado> empleados) {
 
-        if (reclamos == null) {
-            this.reclamos = new ArrayList<>();
-        } else {
-            this.reclamos = new ArrayList<>(reclamos);
-        }
-
-        if (empleados == null) {
-            this.empleados = new ArrayList<>();
-        } else {
+        if (empleados != null) {
             this.empleados = new ArrayList<>(empleados);
+        } else {
+            this.empleados = new ArrayList<>();
         }
 
+        // Cargamos los datos usando el Singleton
+        Object datosRecuperados = GestorArchivos.getInstancia().cargarDatos(RUTA_ARCHIVO);
+
+        if (datosRecuperados != null) {
+            // Hacemos el cast obligatorio de Object a List<Reclamo>
+            this.reclamos = (List<Reclamo>) datosRecuperados;
+        } else {
+            // Si el archivo no existe, arrancamos de cero
+            this.reclamos = new ArrayList<>();
+        }
     }
 
     // Constructor sin parámetros
@@ -102,6 +108,8 @@ public class ControladorReclamo {
                 "Reclamos.Reclamo registrado."
         );
 
+        guardarCambios();
+
         return reclamo;
     }
 
@@ -149,6 +157,7 @@ public class ControladorReclamo {
                 EstadoReclamo.ASIGNADO,
                 "Reclamos.Reclamo asignado a un empleado."
         );
+        guardarCambios();
     }
 
     // 3. ACTUALIZAR EL ESTADO DE UN RECLAMO
@@ -190,6 +199,8 @@ public class ControladorReclamo {
                 nuevoEstado,
                 observacion
         );
+
+        guardarCambios();
     }
 
     // 4. AGREGAR UN COMENTARIO A UN RECLAMO
@@ -229,6 +240,8 @@ public class ControladorReclamo {
 
         reclamo.agregarComentario(nuevoComentario);
         persona.agregarComentario(nuevoComentario);
+
+        guardarCambios();
 
         return nuevoComentario;
     }
@@ -281,4 +294,9 @@ public class ControladorReclamo {
     public List<Reclamo> getReclamos() {
         return List.copyOf(reclamos);
     }
+
+    private void guardarCambios() {
+        GestorArchivos.getInstancia().guardarDatos(RUTA_ARCHIVO, this.reclamos);
+    }
 }
+
