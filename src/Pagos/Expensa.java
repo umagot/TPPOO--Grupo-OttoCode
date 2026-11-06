@@ -6,13 +6,13 @@ import java.util.List;
 import Enum.Estado;
 import Enum.MedioP;
 import Lotes.Lote;
-
+import Enum.EstadoP;
 public class Expensa {
     private int idExpensa;
     private int idLote;
     private int importe;
     private Date fecha_vencimiento;
-    private Estado estado;
+    private EstadoP estado;
     private String periodo;
 
     private Lote lote;
@@ -20,9 +20,8 @@ public class Expensa {
 
     public double calcularTotalPagado() {
         double total = 0;
-
-        for(Pago pago : pagos) {
-            total+= pago.getImporte();
+        for (Pago pago : pagos) {
+            total += pago.getImporte();
         }
         return total;
     }
@@ -63,11 +62,11 @@ public class Expensa {
         this.fecha_vencimiento = fecha_vencimiento;
     }
 
-    public Estado getEstado() {
+    public EstadoP getEstado() {
         return estado;
     }
 
-    public void setEstado(Estado estado) {
+    public void setEstado(EstadoP estado) {
         this.estado = estado;
     }
 
@@ -95,7 +94,7 @@ public class Expensa {
         this.pagos = pagos;
     }
 
-    public Expensa(int idExpensa, int idLote, int importe, Date fecha_vencimiento, Estado estado, String periodo, Lote lote, List<Pago> pagos) {
+    public Expensa(int idExpensa, int idLote, int importe, Date fecha_vencimiento, EstadoP estado, String periodo, Lote lote, List<Pago> pagos) {
         this.idExpensa = idExpensa;
         this.idLote = idLote;
         this.importe = importe;
@@ -103,8 +102,11 @@ public class Expensa {
         this.estado = estado;
         this.periodo = periodo;
         this.lote = lote;
-        this.pagos = pagos;
+        if (pagos != null) {
+            this.pagos = pagos;
+        }
     }
+
     public void agregarPago(Pago pago) {
         if (pago != null && !pagos.contains(pago)) {
             pagos.add(pago);
@@ -114,18 +116,37 @@ public class Expensa {
             }
         }
     }
-        
-     public Pago crearPago(int idPago, Date fecha, int importe, MedioP medioPago, double tasaInteresDiaria) {
-         if (importe <= 0) {
-             throw new IllegalArgumentException("El importe debe ser positivo.");
-        }
-         if (importe > calcularSaldoPendiente()) {
-             throw new IllegalArgumentException("El pago supera el saldo pendiente.");
-        }
-         Pago nuevoPago = new Pago(idPago, idExpensa,fecha,importe,medioPago,interes,this);
 
-    agregarPago(nuevoPago);
 
-    return nuevoPago;
-    }           
+    public Pago crearPago(int idPago, Date fecha, int importe, MedioP medioPago, double tasaInteresDiaria) {
+        if (importe <= 0) {
+            throw new IllegalArgumentException("El importe debe ser positivo.");
+        }
+        if (importe > calcularSaldoPendiente()) {
+            throw new IllegalArgumentException("El pago supera el saldo pendiente.");
+        }
+
+
+        int diasMora = 0;
+        if (fecha_vencimiento != null && fecha.after(fecha_vencimiento)) {
+            long diferenciaEnMilisegundos = fecha.getTime() - fecha_vencimiento.getTime();
+            diasMora = (int) (diferenciaEnMilisegundos / (1000 * 60 * 60 * 24));
+        }
+
+        int interes = 0;
+        if (diasMora > 0) {
+            interes = (int) (importe * tasaInteresDiaria * diasMora);
+        }
+
+        Pago nuevoPago = new Pago(idPago, idExpensa, fecha, importe, medioPago, interes, this);
+        agregarPago(nuevoPago);
+
+        if (calcularSaldoPendiente() <= 0) {
+            this.estado = EstadoP.PAGADA;
+        } else {
+            this.estado = EstadoP.PARCIAL;
+        }
+
+        return nuevoPago;
+    }
 }
