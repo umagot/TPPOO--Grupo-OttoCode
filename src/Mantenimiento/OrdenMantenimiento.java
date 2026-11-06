@@ -14,6 +14,7 @@ public class OrdenMantenimiento {
     private LocalDateTime fechaCierre;
     private Equipo equipo;
     private Empleado empleado;
+    private String descripcionReparacion;
     private Falla falla;
 
     public OrdenMantenimiento(int idOrden, Prioridad prioridad, LocalDateTime fechaApertura, String descripcion, Equipo equipo, Empleado empleado, Falla falla) {
@@ -24,6 +25,7 @@ public class OrdenMantenimiento {
         this.fechaApertura = fechaApertura;
         this.descripcion = descripcion;
         this.fechaCierre = null;
+        this.descripcionReparacion=null;
 
         this.equipo =equipo;
         this.empleado = empleado;

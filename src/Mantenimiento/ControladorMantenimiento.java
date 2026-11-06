@@ -1,6 +1,6 @@
 package Mantenimiento;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import Enum.Estado;
 import Enum.Prioridad;
@@ -8,7 +8,7 @@ import Lotes.Empleado;
 
 public class ControladorMantenimiento {
 
-    public OrdenMantenimiento crearOrden(int idOrden, Date fechaApertura, String descripcion, Equipo equipo, Empleado empleado, Falla falla, List<Equipo> equipos) {
+    public OrdenMantenimiento crearOrden(int idOrden, LocalDateTime fechaApertura, String descripcion, Equipo equipo, Empleado empleado, Falla falla, List<Equipo> equipos) {
 
         // Validaciones
         if (equipo == null || empleado == null || falla == null || equipos == null) {
@@ -53,6 +53,21 @@ public class ControladorMantenimiento {
         // Calcular prioridad automáticamente
         Prioridad prioridad = equipo.calcularPrioridadMantenimiento(fallasActivasEnSector);
 
+
+        //Si la prioridad dio ALTA y es una luminaria, actualizar las anteriores
+        if (equipo instanceof Luminaria && prioridad == Prioridad.ALTA) {
+            for (Equipo e : equipos) {
+                if (e instanceof Luminaria && e.getSector().equals(equipo.getSector()) && e != equipo) {
+                    // Buscar órdenes activas (sin cerrar) de esta luminaria y subirles la prioridad
+                    for (OrdenMantenimiento ordenAnterior : e.getOrdenes()) {
+                        if (ordenAnterior.getFechaCierre() == null) {
+                            ordenAnterior.setPrioridad(Prioridad.ALTA);
+                        }
+                    }
+                }
+            }
+        }
+
         // Crear la orden
         OrdenMantenimiento orden = new OrdenMantenimiento(idOrden, prioridad, fechaApertura, descripcion, equipo, empleado, falla
         );
@@ -69,7 +84,7 @@ public class ControladorMantenimiento {
         return orden;
     }
 
-    public void cerrarOrden(OrdenMantenimiento orden, Date fechaCierre, String descripcionReparacion) {
+    public void cerrarOrden(OrdenMantenimiento orden, LocalDateTime fechaCierre, String descripcionReparacion) {
 
         if (orden == null) {
             throw new IllegalArgumentException("La orden es obligatoria.");
@@ -86,7 +101,7 @@ public class ControladorMantenimiento {
             throw new IllegalArgumentException("La orden ya está cerrada.");
         }
 
-        if (fechaCierre.before(orden.getFechaApertura())) {
+        if (fechaCierre.isBefore(orden.getFechaApertura())) {
             throw new IllegalArgumentException(
                     "La fecha de cierre no puede ser anterior a la apertura."
             );
