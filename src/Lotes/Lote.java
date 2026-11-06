@@ -3,9 +3,10 @@ package Lotes;
 import Pagos.Expensa;
 import Reclamos.Reclamo;
 import Visitas_Y_Accesos.AutorizacionVisita;
-
+import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
+import Pagos.PagoInvalidoExcepcion;
 
 public class Lote {
     private int id_Lote;
@@ -144,4 +145,5 @@ public class Lote {
             }
         }
     }
+
 }

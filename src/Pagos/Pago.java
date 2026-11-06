@@ -1,5 +1,9 @@
 package Pagos;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import Enum.MedioP;
 
 public class Pago {
@@ -75,5 +79,43 @@ public class Pago {
         this.MedioPago = medioPago;
         this.interes = interes;
         this.expensa = expensa;
+    }
+
+    public int compareTo(Pago otroPago) {
+        if (this.fecha == null || otroPago.getFecha() == null) {
+            return 0;
+        }
+        return this.fecha.compareTo(otroPago.getFecha());
+    }
+
+    public static Pago registrarPagoEnExpensaMasVencida(
+            int idPago,
+            List<Expensa> listaExpensas,
+            LocalDate fechaPago,
+            int montoDisponible,
+            MedioP medioPago,
+            double tasaInteresDiaria
+    ) {
+
+        List<Expensa> pendientes = new ArrayList<>();
+        for (Expensa e : listaExpensas) {
+            if (e.calcularSaldoPendiente() > 0) {
+                pendientes.add(e);
+            }
+        }
+
+        if (pendientes.isEmpty()) {
+            throw new PagoInvalidoExcepcion("No hay expensas pendientes de pago en la lista proporcionada.");
+        }
+
+        Collections.sort(pendientes);
+
+        Expensa masVencida = pendientes.get(0);
+        int montoAAplicar = montoDisponible;
+        if (montoAAplicar > masVencida.calcularSaldoPendiente()) {
+            montoAAplicar = (int) masVencida.calcularSaldoPendiente();
+        }
+
+        return masVencida.crearPago(idPago, fechaPago, montoAAplicar, medioPago, tasaInteresDiaria);
     }
 }

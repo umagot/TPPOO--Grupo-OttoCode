@@ -1,11 +1,14 @@
 package Pagos;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import Enum.Estado;
+import Enum.MedioP;
 import Lotes.Lote;
 import Enum.EstadoP;
-public class Expensa {
+public class Expensa implements Comparable<Expensa> {
     private int idExpensa;
     private int idLote;
     private int importe;
@@ -16,16 +19,16 @@ public class Expensa {
     private Lote lote;
     private List<Pago> pagos = new ArrayList<>();
 
-    public double calcularTotalCapitalPagado() {
+    public double calcularTotalPagado() {
         double total = 0;
         for (Pago pago : pagos) {
-            total += pago.getImporte() - pago.getInteres();
+            total += pago.getImporte();
         }
         return total;
     }
 
     public double calcularSaldoPendiente() {
-        return importe - calcularTotalCapitalPagado();
+        return importe - calcularTotalPagado();
     }
 
     public int getIdExpensa() {
@@ -85,7 +88,7 @@ public class Expensa {
     }
 
     public List<Pago> getPagos() {
-        return List.copyOf(pagos);
+        return pagos;
     }
 
     public void setPagos(List<Pago> pagos) {
@@ -115,14 +118,45 @@ public class Expensa {
         }
     }
 
-    public double calcularTotalInteresesPagados() {
-        double total = 0;
 
-        for (Pago pago : pagos) {
-            total += pago.getInteres();
+    public Pago crearPago(int idPago, LocalDate fecha, int importe, MedioP medioPago, double tasaInteresDiaria) {
+
+        if (importe <= 0) {
+            throw new PagoInvalidoExcepcion("El importe debe ser positivo.");
         }
 
-        return total;
+        double saldoPendienteAntesDelPago = calcularSaldoPendiente();
+
+        if (importe > saldoPendienteAntesDelPago) {
+            throw new PagoInvalidoExcepcion("El pago supera el saldo pendiente.");
+        }
+        int diasMora = 0;
+        if (fecha_vencimiento != null && fecha.isAfter(fecha_vencimiento)) {
+            diasMora = (int) ChronoUnit.DAYS.between(fecha_vencimiento, fecha);
+        }
+
+        int interes = 0;
+        if (diasMora > 0) {
+            interes = (int) (saldoPendienteAntesDelPago * tasaInteresDiaria * diasMora);
+        }
+
+        Pago nuevoPago = new Pago(idPago, idExpensa, fecha, importe, medioPago, interes, this);
+        agregarPago(nuevoPago);
+
+        if (calcularSaldoPendiente() <= 0) {
+            this.estado = EstadoP.PAGADA;
+        } else {
+            this.estado = EstadoP.PARCIAL;
+        }
+
+        return nuevoPago;
     }
 
+    @Override
+    public int compareTo(Expensa otraExpensa) {
+        if (this.fecha_vencimiento == null || otraExpensa.getFecha_vencimiento() == null) {
+            return 0;
+        }
+        return this.fecha_vencimiento.compareTo(otraExpensa.getFecha_vencimiento());
+    }
 }
