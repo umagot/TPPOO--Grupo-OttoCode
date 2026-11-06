@@ -2,6 +2,8 @@ package Visitas_Y_Accesos;
 
 import java.util.Date;
 import java.util.List;
+import Lotes.Lote;
+import Lotes.Residente;
 
 public class AutorizacionVisita {
     private int idAutorizacion;

@@ -6,6 +6,8 @@ import Enum.TipoP;
 import Lotes.Empleado;
 import Lotes.Lote;
 import Lotes.Persona;
+import Enum.EstadoReclamo;
+
 
 public class Reclamo {
     private int idReclamo;
@@ -20,6 +22,7 @@ public class Reclamo {
     private Empleado empleado;
     private List<HistorialEstadoReclamo> historial;
     private List<ComentarioReclamo> comentarios;
+    private EstadoReclamo estadoActual;
 
     public int getIdReclamo() {
         return idReclamo;
@@ -145,5 +148,13 @@ public class Reclamo {
         }
 
         comentarios.add(nuevoComentario);
+    }
+
+    public EstadoReclamo getEstadoActual() {
+        return estadoActual;
+    }
+
+    public void setEstadoActual(EstadoReclamo estadoActual) {
+        this.estadoActual = estadoActual;
     }
 }

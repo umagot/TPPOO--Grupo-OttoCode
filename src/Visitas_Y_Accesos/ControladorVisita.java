@@ -106,19 +106,15 @@ public class ControladorVisita {
         lote.agregarAutorizacion(autorizacion);
 
         // Agregar a la lista del residente
-        List<AutorizacionVisita> listaResidente =
-                residente.getAutorizacionesVisita();
+        residente.agregarAutorizacion(autorizacion);
 
-        if (listaResidente == null) {
-            listaResidente = new ArrayList<>();
-        } else {
-            listaResidente = new ArrayList<>(listaResidente);
-        }
+        return autorizacion;
+    }
 
         // 4. REGISTRAR EL INGRESO DE UNA VISITA
-public Registros registrarIngreso(
-        int idAcceso,
-        int idAutorizacion,
+        public Registros registrarIngreso(
+         int idAcceso,
+         int idAutorizacion,
         int idGuardia) {
 
     // Buscar la autorización
@@ -184,11 +180,6 @@ public void registrarSalida(int idAutorizacion) {
     throw new IllegalStateException(
             "No hay ningún ingreso pendiente de salida."
     );
-}
-
-
-
-        
 
         listaResidente.add(autorizacion);
         residente.setAutorizacionesVisita(listaResidente);

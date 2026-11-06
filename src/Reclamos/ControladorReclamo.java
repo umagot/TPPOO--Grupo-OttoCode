@@ -8,6 +8,7 @@ import Enum.EstadoReclamo;
 import Enum.TipoP;
 import Lotes.Empleado;
 import Lotes.Lote;
+import Lotes.Persona;
 import Lotes.Residente;
 
 public class ControladorReclamo {
