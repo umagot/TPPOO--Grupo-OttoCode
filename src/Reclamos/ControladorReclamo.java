@@ -13,8 +13,7 @@ import Lotes.Residente;
 
 
 public class ControladorReclamo {
-
-    private final String RUTA_ARCHIVO = "reclamos.txt";
+    private ReclamoDAO dao;
     private List<Reclamo> reclamos;
     private List<Empleado> empleados;
     private int siguienteIdHistorial = 1;
@@ -29,22 +28,8 @@ public class ControladorReclamo {
             this.empleados = new ArrayList<>();
         }
 
-        // Cargamos los datos usando el Singleton
-        Object datosRecuperados = GestorArchivos.getInstancia().cargarDatos(RUTA_ARCHIVO);
-
-        if (datosRecuperados != null) {
-            // Hacemos el cast obligatorio de Object a List<Reclamo>
-            this.reclamos = (List<Reclamo>) datosRecuperados;
-        } else {
-            // Si el archivo no existe, arrancamos de cero
-            this.reclamos = new ArrayList<>();
-        }
-    }
-
-    // Constructor sin parámetros
-    public ControladorReclamo() {
-        this.reclamos = new ArrayList<>();
-        this.empleados = new ArrayList<>();
+        this.dao = new ReclamoDAO();
+        this.reclamos = dao.obtenerTodos();
     }
 
     // 1. REGISTRAR UN RECLAMO
@@ -296,7 +281,7 @@ public class ControladorReclamo {
     }
 
     private void guardarCambios() {
-        GestorArchivos.getInstancia().guardarDatos(RUTA_ARCHIVO, this.reclamos);
+       dao.actualizarArchivo();
     }
 }
 

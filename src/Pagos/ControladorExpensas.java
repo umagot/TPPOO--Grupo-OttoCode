@@ -11,6 +11,7 @@ import Enum.MedioP;
 
 public class ControladorExpensas {
 
+    private ExpensaDAO dao;
     private List<Expensa> expensas;
   
     public ControladorExpensas() {
@@ -18,11 +19,8 @@ public class ControladorExpensas {
     }
 
     public ControladorExpensas(List<Expensa> expensas) {
-        if (expensas == null) {
-            this.expensas = new ArrayList<>();
-        } else {
-            this.expensas = new ArrayList<>(expensas);
-        }
+        this.dao = new ExpensaDAO();
+        this.expensas = dao.obtenerTodas();
     }
 
     public Expensa registrarExpensa(
@@ -71,6 +69,8 @@ public class ControladorExpensas {
         expensas.add(nuevaExpensa);
         lote.agregarExpensa(nuevaExpensa);
 
+        guardarCambios();
+
         return nuevaExpensa;
     }
 
@@ -79,8 +79,7 @@ public class ControladorExpensas {
             int idPago,
             LocalDate fecha,
             int importe,
-            MedioP medioPago,
-            double tasaInteresDiaria) {
+            MedioP medioPago) {
 
         Expensa expensa = buscarExpensa(idExpensa);
 
@@ -98,8 +97,8 @@ public class ControladorExpensas {
                 idPago,
                 fecha,
                 importe,
-                medioPago,
-                tasaInteresDiaria
+                medioPago
+
         );
     }
 
@@ -159,5 +158,8 @@ public class ControladorExpensas {
 
     public List<Expensa> getExpensas() {
         return List.copyOf(expensas);
+    }
+    private void guardarCambios() {
+        dao.actualizarArchivo();
     }
 }

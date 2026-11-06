@@ -1,12 +1,13 @@
 package Pagos;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import Enum.MedioP;
 
-public class Pago implements Comparable<Pago> {
+public class Pago implements Comparable<Pago>, Serializable {
     private int idPago;
     private int idExpensa;
     private LocalDate fecha;

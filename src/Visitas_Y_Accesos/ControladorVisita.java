@@ -8,19 +8,12 @@ import java.util.List;
 
 public class ControladorVisita {
 
+    private VisitaDAO dao;
     private List<AutorizacionVisita> autorizaciones;
 
-    public ControladorVisita(List<AutorizacionVisita> autorizaciones) {
-
-        if (autorizaciones == null) {
-            this.autorizaciones = new ArrayList<>();
-        } else {
-            this.autorizaciones = new ArrayList<>(autorizaciones);
-        }
-    }
-
-
-    public ControladorVisita() {this.autorizaciones = new ArrayList<>();
+    public ControladorVisita() {
+        this.dao = new VisitaDAO();
+        this.autorizaciones = dao.obtenerTodas();
     }
 
     // 1. REGISTRAR UNA AUTORIZACION DE VISITA
@@ -107,31 +100,34 @@ public class ControladorVisita {
         // Agregar a la lista del residente
         residente.agregarAutorizacion(autorizacion);
 
+        guardarCambios();
+
         return autorizacion;
     }
+
     public Registros registrarIngreso(
-         int idAcceso,
-         int idAutorizacion,
-        int idGuardia) {
+            int idAcceso,
+            int idAutorizacion,
+            int idGuardia) {
 
-    // Buscar la autorización
-    AutorizacionVisita autorizacion =
-            buscarAutorizacion(idAutorizacion);
+        // Buscar la autorización
+        AutorizacionVisita autorizacion =
+                buscarAutorizacion(idAutorizacion);
 
-    if (autorizacion == null) {
-        throw new IllegalArgumentException(
-                "No existe esa autorización."
-        );
-    }
+        if (autorizacion == null) {
+            throw new IllegalArgumentException(
+                    "No existe esa autorización."
+            );
+        }
 
-    // Comprobar que esté vigente
-    if (!estaAutorizada(idAutorizacion)) {
-        throw new IllegalStateException(
-                "La visita no está autorizada en este momento."
-        );
-    }
+        // Comprobar que esté vigente
+        if (!estaAutorizada(idAutorizacion)) {
+            throw new IllegalStateException(
+                    "La visita no está autorizada en este momento."
+            );
+        }
 
-    for (Registros registroExistente : autorizacion.getRegistros()) {
+        for (Registros registroExistente : autorizacion.getRegistros()) {
 
             if (registroExistente.getHoraingreso() != null
                     && registroExistente.getHoraSalida() == null) {
@@ -142,52 +138,56 @@ public class ControladorVisita {
             }
         }
 
-    // Crear el registro sin hora de ingreso ni salida
-    Registros registro = new Registros(
-            idAcceso,
-            idAutorizacion,
-            idGuardia,
-            null,
-            null,
-            autorizacion
-    );
-
-    // Registrar la hora actual
-    registro.registrarIngreso(LocalDateTime.now());
-
-    // Asociar el registro a la autorización
-    autorizacion.getRegistros().add(registro);
-
-    return registro;
-}
-        // 5. REGISTRAR LA SALIDA DE UNA VISITA
-public void registrarSalida(int idAutorizacion) {
-
-    AutorizacionVisita autorizacion =
-            buscarAutorizacion(idAutorizacion);
-
-    if (autorizacion == null) {
-        throw new IllegalArgumentException(
-                "No existe esa autorización."
+        // Crear el registro sin hora de ingreso ni salida
+        Registros registro = new Registros(
+                idAcceso,
+                idAutorizacion,
+                idGuardia,
+                null,
+                null,
+                autorizacion
         );
+
+        // Registrar la hora actual
+        registro.registrarIngreso(LocalDateTime.now());
+
+        // Asociar el registro a la autorización
+        autorizacion.getRegistros().add(registro);
+
+        guardarCambios();
+
+        return registro;
     }
 
-    List<Registros> registros = autorizacion.getRegistros();
+    // 5. REGISTRAR LA SALIDA DE UNA VISITA
+    public void registrarSalida(int idAutorizacion) {
 
-    // Buscar un ingreso que todavía no tenga salida
-    for (Registros registro : registros) {
+        AutorizacionVisita autorizacion =
+                buscarAutorizacion(idAutorizacion);
 
-        if (registro.getHoraingreso() != null
-                && registro.getHoraSalida() == null) {
-
-            registro.registrarSalida(LocalDateTime.now());
-            return;
+        if (autorizacion == null) {
+            throw new IllegalArgumentException(
+                    "No existe esa autorización."
+            );
         }
-    }
 
-    throw new IllegalStateException(
-            "No hay ningún ingreso pendiente de salida."
-    );
+        List<Registros> registros = autorizacion.getRegistros();
+
+        // Buscar un ingreso que todavía no tenga salida
+        for (Registros registro : registros) {
+
+            if (registro.getHoraingreso() != null
+                    && registro.getHoraSalida() == null) {
+
+                registro.registrarSalida(LocalDateTime.now());
+                guardarCambios();
+                return;
+            }
+        }
+
+        throw new IllegalStateException(
+                "No hay ningún ingreso pendiente de salida."
+        );
     }
 
     // 2. BUSCAR UNA AUTORIZACION POR ID
@@ -237,5 +237,9 @@ public void registrarSalida(int idAutorizacion) {
         }
 
         return encontradas;
+    }
+
+    private void guardarCambios() {
+        dao.actualizarArchivo();
     }
 }

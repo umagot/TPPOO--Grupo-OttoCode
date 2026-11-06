@@ -1,5 +1,6 @@
 package Pagos;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import Enum.MedioP;
 import Lotes.Lote;
 import Enum.EstadoP;
 
-public class Expensa implements Comparable<Expensa> {
+public class Expensa implements Comparable<Expensa>, Serializable {
     private int idExpensa;
     private int idLote;
     private int importe;

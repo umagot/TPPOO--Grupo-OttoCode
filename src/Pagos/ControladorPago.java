@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ControladorPago {
-
+    private PagoDAO dao;
     private List<Pago> pagos;
     private int siguienteIdPago;
 
     public ControladorPago() {
-        this.pagos = new ArrayList<>();
+        this.pagos = dao.obtenerTodos();
         this.siguienteIdPago = 1;
     }
 
@@ -33,9 +33,13 @@ public class ControladorPago {
         }
 
         pagos.add(pago);
+        guardarCambios();
     }
 
     public List<Pago> getPagos() {
         return List.copyOf(pagos);
+    }
+    private void guardarCambios() {
+        dao.actualizarArchivo();
     }
 }

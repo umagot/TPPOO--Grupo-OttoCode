@@ -7,9 +7,10 @@ import Lotes.Empleado;
 import Lotes.Lote;
 import Lotes.Persona;
 import Enum.EstadoReclamo;
+import java.io.Serializable;
 
 
-public class Reclamo {
+public class Reclamo implements Serializable {
     private int idReclamo;
     private int idPersona;
     private Date fecha;
