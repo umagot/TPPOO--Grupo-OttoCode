@@ -1,5 +1,7 @@
 package Visitas_Y_Accesos;
 
+import Lotes.Lote;
+import Lotes.Residente;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
