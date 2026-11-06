@@ -19,7 +19,6 @@ public class Empleado extends Persona {
 
     private final List<Registros> registrosGuardia = new ArrayList<>();
 
-    public Empleado() {}
 
     public Empleado(int idPersona, String nombre, String apellido, int dni, String telefono, String correoElectronico, int legajo, LocalDate fechaIngreso, String tipoPersonal) {
         super(idPersona, nombre, apellido, dni, telefono, correoElectronico);

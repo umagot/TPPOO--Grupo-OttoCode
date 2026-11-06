@@ -1,7 +1,9 @@
 package Reclamos;
 
+import java.time.LocalDateTime;
+import java.time.chrono.ChronoLocalDate;
 import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import Enum.Estado;
@@ -31,35 +33,22 @@ public class ReporteReclamosService {
 
         for (Reclamo reclamo : reclamos) {
 
-            List<HistorialEstadoReclamo> historial =
-                    reclamo.getHistorial();
-
-            if (historial == null || historial.isEmpty()) {
+            if (reclamo.getEstadoActual() != EstadoReclamo.RESUELTO &&
+                    reclamo.getEstadoActual() != EstadoReclamo.CERRADO) {
                 pendientes.add(reclamo);
-            } else {
-
-                EstadoReclamo ultimoEstado =
-                        historial.get(historial.size() - 1).getNuevoEstado();
-
-                if (ultimoEstado != EstadoReclamo.RESUELTO
-                        && ultimoEstado != EstadoReclamo.CERRADO) {
-
-                    pendientes.add(reclamo);
-                }
             }
         }
-
         return pendientes;
     }
     public double generarReporteMorosidad() {
 
         double totalMorosidad = 0;
-        Date fechaActual = new Date();
+        LocalDateTime fechaActual = LocalDateTime.now();
 
         for (Expensa expensa : expensas) {
 
             if (expensa.getFecha_vencimiento() != null
-                    && expensa.getFecha_vencimiento().before(fechaActual)
+                    && expensa.getFecha_vencimiento().isBefore(ChronoLocalDate.from(fechaActual))
                     && expensa.calcularSaldoPendiente() > 0) {
 
                 totalMorosidad += expensa.calcularSaldoPendiente();
