@@ -19,7 +19,7 @@ public class ControladorVisita {
         }
     }
 
-    
+
     public ControladorVisita() {
         this.autorizaciones = new ArrayList<>();
     }
@@ -110,9 +110,7 @@ public class ControladorVisita {
 
         return autorizacion;
     }
-
-        // 4. REGISTRAR EL INGRESO DE UNA VISITA
-        public Registros registrarIngreso(
+    public Registros registrarIngreso(
          int idAcceso,
          int idAutorizacion,
         int idGuardia) {
@@ -133,6 +131,17 @@ public class ControladorVisita {
                 "La visita no está autorizada en este momento."
         );
     }
+
+    for (Registros registroExistente : autorizacion.getRegistros()) {
+
+            if (registroExistente.getHoraingreso() != null
+                    && registroExistente.getHoraSalida() == null) {
+
+                throw new IllegalStateException(
+                        "La visita ya tiene un ingreso pendiente de salida."
+                );
+            }
+        }
 
     // Crear el registro sin hora de ingreso ni salida
     Registros registro = new Registros(
@@ -180,11 +189,6 @@ public void registrarSalida(int idAutorizacion) {
     throw new IllegalStateException(
             "No hay ningún ingreso pendiente de salida."
     );
-
-        listaResidente.add(autorizacion);
-        residente.setAutorizacionesVisita(listaResidente);
-
-        return autorizacion;
     }
 
     // 2. BUSCAR UNA AUTORIZACION POR ID

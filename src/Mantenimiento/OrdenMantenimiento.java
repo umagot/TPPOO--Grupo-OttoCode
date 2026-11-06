@@ -31,8 +31,6 @@ public class OrdenMantenimiento {
 
     }
 
-
-
     public int getIdOrden() {
         return idOrden;
     }
