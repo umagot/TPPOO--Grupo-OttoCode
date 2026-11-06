@@ -8,7 +8,7 @@ import Enum.Estado;
 import Enum.MedioP;
 import Lotes.Lote;
 import Enum.EstadoP;
-public class Expensa {
+public class Expensa implements Comparable<Expensa> {
     private int idExpensa;
     private int idLote;
     private int importe;
@@ -150,5 +150,13 @@ public class Expensa {
         }
 
         return nuevoPago;
+    }
+
+    @Override
+    public int compareTo(Expensa otraExpensa) {
+        if (this.fecha_vencimiento == null || otraExpensa.getFecha_vencimiento() == null) {
+            return 0;
+        }
+        return this.fecha_vencimiento.compareTo(otraExpensa.getFecha_vencimiento());
     }
 }
