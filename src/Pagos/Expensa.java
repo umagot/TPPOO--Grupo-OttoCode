@@ -1,6 +1,7 @@
 package Pagos;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import Enum.Estado;
@@ -11,7 +12,7 @@ public class Expensa {
     private int idExpensa;
     private int idLote;
     private int importe;
-    private Date fecha_vencimiento;
+    private LocalDate fecha_vencimiento;
     private EstadoP estado;
     private String periodo;
 
@@ -54,11 +55,11 @@ public class Expensa {
         this.importe = importe;
     }
 
-    public Date getFecha_vencimiento() {
+    public LocalDate getFecha_vencimiento() {
         return fecha_vencimiento;
     }
 
-    public void setFecha_vencimiento(Date fecha_vencimiento) {
+    public void setFecha_vencimiento(LocalDate fecha_vencimiento) {
         this.fecha_vencimiento = fecha_vencimiento;
     }
 
@@ -94,7 +95,7 @@ public class Expensa {
         this.pagos = pagos;
     }
 
-    public Expensa(int idExpensa, int idLote, int importe, Date fecha_vencimiento, EstadoP estado, String periodo, Lote lote, List<Pago> pagos) {
+    public Expensa(int idExpensa, int idLote, int importe, LocalDate fecha_vencimiento, EstadoP estado, String periodo, Lote lote, List<Pago> pagos) {
         this.idExpensa = idExpensa;
         this.idLote = idLote;
         this.importe = importe;
@@ -118,24 +119,24 @@ public class Expensa {
     }
 
 
-    public Pago crearPago(int idPago, Date fecha, int importe, MedioP medioPago, double tasaInteresDiaria) {
+    public Pago crearPago(int idPago, LocalDate fecha, int importe, MedioP medioPago, double tasaInteresDiaria) {
         if (importe <= 0) {
             throw new IllegalArgumentException("El importe debe ser positivo.");
         }
+        double saldoPendienteAntesDelPago = calcularSaldoPendiente();
         if (importe > calcularSaldoPendiente()) {
             throw new IllegalArgumentException("El pago supera el saldo pendiente.");
         }
 
 
         int diasMora = 0;
-        if (fecha_vencimiento != null && fecha.after(fecha_vencimiento)) {
-            long diferenciaEnMilisegundos = fecha.getTime() - fecha_vencimiento.getTime();
-            diasMora = (int) (diferenciaEnMilisegundos / (1000 * 60 * 60 * 24));
+        if (fecha_vencimiento != null && fecha.isAfter(fecha_vencimiento)) {
+            diasMora = (int) ChronoUnit.DAYS.between(fecha_vencimiento, fecha);
         }
 
         int interes = 0;
         if (diasMora > 0) {
-            interes = (int) (importe * tasaInteresDiaria * diasMora);
+            interes = (int) (saldoPendienteAntesDelPago * tasaInteresDiaria * diasMora);
         }
 
         Pago nuevoPago = new Pago(idPago, idExpensa, fecha, importe, medioPago, interes, this);

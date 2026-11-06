@@ -1,12 +1,11 @@
 package Pagos;
-
-import java.util.Date;
+import java.time.LocalDate;
 import Enum.MedioP;
 
 public class Pago {
     private int idPago;
     private int idExpensa;
-    private Date fecha;
+    private LocalDate fecha;
     private int importe;
     private MedioP MedioPago;
     private int interes;
@@ -28,11 +27,11 @@ public class Pago {
         this.idExpensa = idExpensa;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
@@ -68,7 +67,7 @@ public class Pago {
         this.expensa = expensa;
     }
 
-    public Pago(int idPago, int idExpensa, Date fecha, int importe, MedioP medioPago, int interes, Expensa expensa) {
+    public Pago(int idPago, int idExpensa, LocalDate fecha, int importe, MedioP medioPago, int interes, Expensa expensa) {
         this.idPago = idPago;
         this.idExpensa = idExpensa;
         this.fecha = fecha;
