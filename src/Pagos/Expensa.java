@@ -120,15 +120,16 @@ public class Expensa {
 
 
     public Pago crearPago(int idPago, LocalDate fecha, int importe, MedioP medioPago, double tasaInteresDiaria) {
+
         if (importe <= 0) {
-            throw new IllegalArgumentException("El importe debe ser positivo.");
+            throw new PagoInvalidoExcepcion("El importe debe ser positivo.");
         }
+
         double saldoPendienteAntesDelPago = calcularSaldoPendiente();
-        if (importe > calcularSaldoPendiente()) {
-            throw new IllegalArgumentException("El pago supera el saldo pendiente.");
+
+        if (importe > saldoPendienteAntesDelPago) {
+            throw new PagoInvalidoExcepcion("El pago supera el saldo pendiente.");
         }
-
-
         int diasMora = 0;
         if (fecha_vencimiento != null && fecha.isAfter(fecha_vencimiento)) {
             diasMora = (int) ChronoUnit.DAYS.between(fecha_vencimiento, fecha);
