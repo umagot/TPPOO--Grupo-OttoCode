@@ -12,9 +12,9 @@ public class Lote {
     private int Superficie;
     private int idTitular;
 
-    private List<Residente> residentes= new ArrayList<>();
-    private List<Expensa> expensas= new ArrayList<>();
-    private List<Reclamo> reclamos= new ArrayList<>();
+    private List<Residente> residentes = new ArrayList<>();
+    private List<Expensa> expensas = new ArrayList<>();
+    private List<Reclamo> reclamos = new ArrayList<>();
     private List<AutorizacionVisita> autorizaciones = new ArrayList<>();
 
     public int getId_Lote() {
@@ -74,8 +74,7 @@ public class Lote {
     }
 
     public void agregarAutorizacion(AutorizacionVisita autorizacion) {
-        if (autorizacion != null
-                && !autorizaciones.contains(autorizacion)) {
+        if (autorizacion != null && !autorizaciones.contains(autorizacion)) {
             autorizaciones.add(autorizacion);
 
             if (autorizacion.getLote() != this) {
@@ -84,54 +83,57 @@ public class Lote {
         }
     }
 
-   public Lote(int id_Lote, int superficie, int idTitular,
-            List<Residente> residentes,
-            List<Expensa> expensas,
-            List<Reclamo> reclamos,
-            List<AutorizacionVisita> autorizaciones) {
+    public Lote(int id_Lote, int superficie, int idTitular,
+                List<Residente> residentes,
+                List<Expensa> expensas,
+                List<Reclamo> reclamos,
+                List<AutorizacionVisita> autorizaciones) {
 
-    this.id_Lote = id_Lote;
-    this.Superficie = superficie;
-    this.idTitular = idTitular;
+        this.id_Lote = id_Lote;
+        this.Superficie = superficie;
+        this.idTitular = idTitular;
 
-    if (residentes != null) {
-        this.residentes = new ArrayList<>(residentes);
-    } else {
-        this.residentes = new ArrayList<>();
+        if (residentes != null) {
+            this.residentes = new ArrayList<>(residentes);
+        } else {
+            this.residentes = new ArrayList<>();
+        }
+
+        if (expensas != null) {
+            this.expensas = new ArrayList<>(expensas);
+        } else {
+            this.expensas = new ArrayList<>();
+        }
+
+        if (reclamos != null) {
+            this.reclamos = new ArrayList<>(reclamos);
+        } else {
+            this.reclamos = new ArrayList<>();
+        }
+
+        if (autorizaciones != null) {
+            this.autorizaciones = new ArrayList<>(autorizaciones);
+        } else {
+            this.autorizaciones = new ArrayList<>();
+        }
     }
-
-    if (expensas != null) {
-        this.expensas = new ArrayList<>(expensas);
-    } else {
-        this.expensas = new ArrayList<>();
-    }
-
-    if (reclamos != null) {
-        this.reclamos = new ArrayList<>(reclamos);
-    } else {
-        this.reclamos = new ArrayList<>();
-    }
-
-    if (autorizaciones != null) {
-        this.autorizaciones = new ArrayList<>(autorizaciones);
-    } else {
-        this.autorizaciones = new ArrayList<>();
-    }
-}
 
     public void agregarResidente(Residente residente) {
-    if (residente != null && !residentes.contains(residente)) {
-        residentes.add(residente);
-        residente.setLote(this);
-        residente.setIdLote(this.id_Lote);
+        if (residente != null && !residentes.contains(residente)) {
+            residentes.add(residente);
+            residente.setLote(this);
+            residente.setIdLote(this.id_Lote);
+        }
     }
-}
 
-public void agregarExpensa(Expensa expensa) {
-    if (expensa != null && !expensas.contains(expensa)) {
-        expensas.add(expensa);
+    public void agregarExpensa(Expensa expensa) {
+        if (expensa != null && !expensas.contains(expensa)) {
+            expensas.add(expensa);
+            if (expensa.getLote() != this) {
+                expensa.setLote(this);
+            }
+        }
     }
-}
 
     public void agregarReclamo(Reclamo reclamo) {
         if (reclamo != null && !reclamos.contains(reclamo)) {

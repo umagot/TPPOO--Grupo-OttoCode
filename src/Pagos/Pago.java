@@ -73,7 +73,7 @@ public class Pago {
         this.idExpensa = idExpensa;
         this.fecha = fecha;
         this.importe = importe;
-        MedioPago = medioPago;
+        this.MedioPago = medioPago;
         this.interes = interes;
         this.expensa = expensa;
     }
