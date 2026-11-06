@@ -129,4 +129,10 @@ public class Lote {
             }
         }
     }
+
+    public List<Expensa> getExpensasOrdenadasPorImporte() {
+        List<Expensa> listaOrdenada = new ArrayList<>(expensas);
+        listaOrdenada.sort(Expensa.porImporteDescendente);
+        return listaOrdenada;
+    }
 }
