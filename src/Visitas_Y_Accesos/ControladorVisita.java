@@ -3,7 +3,7 @@ package Visitas_Y_Accesos;
 import Lotes.Lote;
 import Lotes.Residente;
 import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class ControladorVisita {
@@ -29,8 +29,8 @@ public class ControladorVisita {
             Residente residente,
             String nombre,
             int dni,
-            Date fechaHoraInicio,
-            Date fechaHoraFin,
+            LocalDateTime fechaHoraInicio,
+            LocalDateTime fechaHoraFin,
             boolean esProveedor) {
 
         if (residente == null) {
@@ -63,7 +63,7 @@ public class ControladorVisita {
             );
         }
 
-        if (fechaHoraFin.before(fechaHoraInicio)) {
+        if (fechaHoraFin.isBefore(fechaHoraInicio)) {
             throw new IllegalArgumentException(
                     "La fecha de fin no puede ser anterior al inicio."
             );
@@ -153,7 +153,7 @@ public class ControladorVisita {
     );
 
     // Registrar la hora actual
-    registro.registrarIngreso(new Date());
+    registro.registrarIngreso(LocalDateTime.now());
 
     // Asociar el registro a la autorización
     autorizacion.getRegistros().add(registro);
@@ -180,7 +180,7 @@ public void registrarSalida(int idAutorizacion) {
         if (registro.getHoraingreso() != null
                 && registro.getHoraSalida() == null) {
 
-            registro.registrarSalida(new Date());
+            registro.registrarSalida(LocalDateTime.now());
             return;
         }
     }
@@ -213,10 +213,10 @@ public void registrarSalida(int idAutorizacion) {
             return false;
         }
 
-        Date ahora = new Date();
+        LocalDateTime ahora = LocalDateTime.now();
 
-        return !ahora.before(autorizacion.getFechaHoraInicio())
-                && !ahora.after(autorizacion.getFechaHoraFin());
+        return !ahora.isBefore(autorizacion.getFechaHoraInicio())
+                && !ahora.isAfter(autorizacion.getFechaHoraFin());
     }
 
     // 4. OBTENER TODAS LAS AUTORIZACIONES

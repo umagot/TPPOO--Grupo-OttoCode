@@ -1,13 +1,13 @@
 package Visitas_Y_Accesos;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Registros {
     private int idAcceso;
     private int idAutorizacion;
     private int idGuardia;
-    private Date horaingreso;
-    private Date horaSalida;
+    private LocalDateTime horaingreso;
+    private LocalDateTime horaSalida;
     private AutorizacionVisita autorizacionVisita;
 
     public int getIdAcceso() {
@@ -34,19 +34,19 @@ public class Registros {
         this.idGuardia = idGuardia;
     }
 
-    public Date getHoraingreso() {
+    public LocalDateTime getHoraingreso() {
         return horaingreso;
     }
 
-    public void setHoraingreso(Date horaingreso) {
+    public void setHoraingreso(LocalDateTime horaingreso) {
         this.horaingreso = horaingreso;
     }
 
-    public Date getHoraSalida() {
+    public LocalDateTime getHoraSalida() {
         return horaSalida;
     }
 
-    public void setHoraSalida(Date horaSalida) {
+    public void setHoraSalida(LocalDateTime horaSalida) {
         this.horaSalida = horaSalida;
     }
 
@@ -59,7 +59,7 @@ public class Registros {
     }
 
 
-    public void registrarIngreso(Date horaIngreso) {
+    public void registrarIngreso(LocalDateTime horaIngreso) {
     if (horaIngreso == null) {
         throw new IllegalArgumentException("La hora de ingreso no puede ser nula");
     }
@@ -70,7 +70,7 @@ public class Registros {
 
     this.horaingreso = horaIngreso;
 }
-    public void registrarSalida(Date horaSalida) {
+    public void registrarSalida(LocalDateTime horaSalida) {
     if (horaSalida == null) {
         throw new IllegalArgumentException("La hora de salida no puede ser nula");
     }
@@ -79,7 +79,7 @@ public class Registros {
         throw new IllegalStateException("Primero debe registrarse el ingreso");
     }
 
-    if (horaSalida.before(this.horaingreso)) {
+    if (horaSalida.isBefore(this.horaingreso)) {
         throw new IllegalArgumentException("La salida no puede ser anterior al ingreso");
     }
 
@@ -90,7 +90,7 @@ public class Registros {
     this.horaSalida = horaSalida;
 }
 
-    public Registros(int idAcceso, int idAutorizacion, int idGuardia, Date horaingreso, Date horaSalida, AutorizacionVisita autorizacionVisita) {
+    public Registros(int idAcceso, int idAutorizacion, int idGuardia, LocalDateTime horaingreso, LocalDateTime horaSalida, AutorizacionVisita autorizacionVisita) {
         this.idAcceso = idAcceso;
         this.idAutorizacion = idAutorizacion;
         this.idGuardia = idGuardia;

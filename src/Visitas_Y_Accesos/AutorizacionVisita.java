@@ -1,6 +1,6 @@
 package Visitas_Y_Accesos;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import Lotes.Lote;
 import Lotes.Residente;
@@ -11,8 +11,8 @@ public class AutorizacionVisita {
     private int idResidente;
     private String nombre;
     private int DNI;
-    private Date fechaHoraInicio;
-    private Date fechaHoraFin;
+    private LocalDateTime fechaHoraInicio;
+    private LocalDateTime fechaHoraFin;
     private boolean esProveedor;
     private Lote lote;
     private Residente residente;
@@ -58,18 +58,18 @@ public class AutorizacionVisita {
         this.DNI = DNI;
     }
 
-    public Date getFechaHoraInicio() {
+    public LocalDateTime getFechaHoraInicio() {
         return fechaHoraInicio;
     }
 
-    public void setFechaHoraInicio(Date fechaingreso) {
+    public void setFechaHoraInicio(LocalDateTime fechaingreso) {
         this.fechaHoraInicio = fechaingreso;
     }
-    public Date getFechaHoraFin() {
+    public LocalDateTime getFechaHoraFin() {
     return fechaHoraFin;
     }
 
-public void setFechaHoraFin(Date fechaHoraFin) {
+public void setFechaHoraFin(LocalDateTime fechaHoraFin) {
     this.fechaHoraFin = fechaHoraFin;
     }
     
@@ -105,7 +105,7 @@ public void setFechaHoraFin(Date fechaHoraFin) {
         this.registros = registros;
     }
 
-    public AutorizacionVisita(int idAutorizacion, int idLote, int idResidente, String nombre, int DNI, Date fechaingreso, boolean esProveedor, Lote lote, Residente residente, List<Registros> registros) {
+    public AutorizacionVisita(int idAutorizacion, int idLote, int idResidente, String nombre, int DNI, LocalDateTime fechaingreso, boolean esProveedor, Lote lote, Residente residente, List<Registros> registros) {
         this.idAutorizacion = idAutorizacion;
         this.idLote = idLote;
         this.idResidente = idResidente;
