@@ -94,13 +94,7 @@ public class ControladorExpensas {
                     "La fecha y el medio de pago son obligatorios.");
         }
 
-        return expensa.crearPago(
-                idPago,
-                fecha,
-                importe,
-                medioPago,
-                tasaInteresDiaria
-        );
+        return expensa.crearPago(idPago, fecha, importe, medioPago);
     }
 
     public Expensa buscarExpensa(int idExpensa) {

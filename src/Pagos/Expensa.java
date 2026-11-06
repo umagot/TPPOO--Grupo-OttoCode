@@ -38,7 +38,6 @@ public class Expensa implements Comparable<Expensa> {
         }
         double saldoImpago = calcularSaldoPendiente();
         if (saldoImpago <= 0) return 0;
-
         long diasMora = ChronoUnit.DAYS.between(fecha_vencimiento, fechaPago);
         return (int) (saldoImpago * TASA_INTERES_DIARIA * diasMora);
     }
@@ -138,4 +137,12 @@ public class Expensa implements Comparable<Expensa> {
         }
         return this.fecha_vencimiento.compareTo(otraExpensa.getFecha_vencimiento());
     }
+
+
+    public static java.util.Comparator<Expensa> porImporteDescendente = new java.util.Comparator<Expensa>() {
+        @Override
+        public int compare(Expensa e1, Expensa e2) {
+            return Integer.compare(e2.getImporte(), e1.getImporte());
+        }
+    };
 }
