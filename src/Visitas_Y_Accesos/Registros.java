@@ -90,10 +90,6 @@ public class Registros {
     this.horaSalida = horaSalida;
 }
 
-
-
-    
-
     public Registros(int idAcceso, int idAutorizacion, int idGuardia, Date horaingreso, Date horaSalida, AutorizacionVisita autorizacionVisita) {
         this.idAcceso = idAcceso;
         this.idAutorizacion = idAutorizacion;

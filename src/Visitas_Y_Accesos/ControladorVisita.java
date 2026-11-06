@@ -20,8 +20,7 @@ public class ControladorVisita {
     }
 
 
-    public ControladorVisita() {
-        this.autorizaciones = new ArrayList<>();
+    public ControladorVisita() {this.autorizaciones = new ArrayList<>();
     }
 
     // 1. REGISTRAR UNA AUTORIZACION DE VISITA

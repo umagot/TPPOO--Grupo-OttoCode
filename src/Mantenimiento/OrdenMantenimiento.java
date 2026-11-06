@@ -1,6 +1,6 @@
 package Mantenimiento;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import Enum.Prioridad;
 import Lotes.Empleado;
 
@@ -9,14 +9,14 @@ public class OrdenMantenimiento {
     private int idEquipo;
     private int idEmpleado;
     private Prioridad prioridad;
-    private Date fechaApertura;
+    private LocalDateTime fechaApertura;
     private String descripcion;
-    private Date fechaCierre;
+    private LocalDateTime fechaCierre;
     private Equipo equipo;
     private Empleado empleado;
     private Falla falla;
 
-    public OrdenMantenimiento(int idOrden, Prioridad prioridad, Date fechaApertura, String descripcion, Equipo equipo, Empleado empleado, Falla falla) {
+    public OrdenMantenimiento(int idOrden, Prioridad prioridad, LocalDateTime fechaApertura, String descripcion, Equipo equipo, Empleado empleado, Falla falla) {
         this.idOrden = idOrden;
         this.idEquipo = equipo.getIdEquipo();
         this.idEmpleado = empleado.getLegajo();
@@ -63,11 +63,11 @@ public class OrdenMantenimiento {
         this.prioridad = prioridad;
     }
 
-    public Date getFechaApertura() {
+    public LocalDateTime getFechaApertura() {
         return fechaApertura;
     }
 
-    public void setFechaApertura(Date fechaApertura) {
+    public void setFechaApertura(LocalDateTime fechaApertura) {
         this.fechaApertura = fechaApertura;
     }
 
@@ -79,11 +79,11 @@ public class OrdenMantenimiento {
         this.descripcion = descripcion;
     }
 
-    public Date getFechaCierre() {
+    public LocalDateTime getFechaCierre() {
         return fechaCierre;
     }
 
-    public void setFechaCierre(Date fechaCierre) {
+    public void setFechaCierre(LocalDateTime fechaCierre) {
         this.fechaCierre = fechaCierre;
     }
 

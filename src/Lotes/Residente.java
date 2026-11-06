@@ -11,7 +11,6 @@ public class Residente extends Persona {
     private int IdResidente;
     private int idLote;
     private Tipo tipoResidente;
-    private estadoR estadoReclamo;
     private Lote lote;
     private List<AutorizacionVisita> autorizacionesVisita = new ArrayList<>();
 
@@ -39,14 +38,6 @@ public class Residente extends Persona {
         this.tipoResidente = tipoResidente;
     }
 
-    public estadoR getEstadoReclamo() {
-        return estadoReclamo;
-    }
-
-    public void setEstadoReclamo(estadoR estadoReclamo) {
-        this.estadoReclamo = estadoReclamo;
-    }
-
     public Lote getLote() {
         return lote;
     }
@@ -60,7 +51,7 @@ public class Residente extends Persona {
     }
 
     public List<AutorizacionVisita> getAutorizacionesVisita() {
-        return autorizacionesVisita;
+        return List.copyOf(autorizacionesVisita);
     }
 
     public void agregarAutorizacion(AutorizacionVisita autorizacion) {
@@ -75,7 +66,6 @@ public class Residente extends Persona {
         IdResidente = idResidente;
         this.idLote = idLote;
         this.tipoResidente = tipoResidente;
-        this.estadoReclamo = estadoReclamo;
         this.lote = lote;
         this.autorizacionesVisita = autorizacionesVisita;
     }

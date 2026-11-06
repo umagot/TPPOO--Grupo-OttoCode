@@ -1,11 +1,8 @@
 package Pagos;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-import Enum.Estado;
-import Enum.MedioP;
 import Lotes.Lote;
 import Enum.EstadoP;
 public class Expensa {
@@ -19,16 +16,16 @@ public class Expensa {
     private Lote lote;
     private List<Pago> pagos = new ArrayList<>();
 
-    public double calcularTotalPagado() {
+    public double calcularTotalCapitalPagado() {
         double total = 0;
         for (Pago pago : pagos) {
-            total += pago.getImporte();
+            total += pago.getImporte() - pago.getInteres();
         }
         return total;
     }
 
     public double calcularSaldoPendiente() {
-        return importe - calcularTotalPagado();
+        return importe - calcularTotalCapitalPagado();
     }
 
     public int getIdExpensa() {
@@ -88,7 +85,7 @@ public class Expensa {
     }
 
     public List<Pago> getPagos() {
-        return pagos;
+        return List.copyOf(pagos);
     }
 
     public void setPagos(List<Pago> pagos) {
@@ -118,36 +115,14 @@ public class Expensa {
         }
     }
 
+    public double calcularTotalInteresesPagados() {
+        double total = 0;
 
-    public Pago crearPago(int idPago, LocalDate fecha, int importe, MedioP medioPago, double tasaInteresDiaria) {
-        if (importe <= 0) {
-            throw new IllegalArgumentException("El importe debe ser positivo.");
-        }
-        double saldoPendienteAntesDelPago = calcularSaldoPendiente();
-        if (importe > calcularSaldoPendiente()) {
-            throw new IllegalArgumentException("El pago supera el saldo pendiente.");
+        for (Pago pago : pagos) {
+            total += pago.getInteres();
         }
 
-
-        int diasMora = 0;
-        if (fecha_vencimiento != null && fecha.isAfter(fecha_vencimiento)) {
-            diasMora = (int) ChronoUnit.DAYS.between(fecha_vencimiento, fecha);
-        }
-
-        int interes = 0;
-        if (diasMora > 0) {
-            interes = (int) (saldoPendienteAntesDelPago * tasaInteresDiaria * diasMora);
-        }
-
-        Pago nuevoPago = new Pago(idPago, idExpensa, fecha, importe, medioPago, interes, this);
-        agregarPago(nuevoPago);
-
-        if (calcularSaldoPendiente() <= 0) {
-            this.estado = EstadoP.PAGADA;
-        } else {
-            this.estado = EstadoP.PARCIAL;
-        }
-
-        return nuevoPago;
+        return total;
     }
+
 }
