@@ -169,6 +169,28 @@ public class ControladorReclamo {
 
         EstadoReclamo estadoActual = reclamo.getEstadoActual();
 
+        // Validar que el empleado no supere los 5 reclamos en curso
+        if (nuevoEstado == EstadoReclamo.EN_CURSO &&
+             estadoActual != EstadoReclamo.EN_CURSO) {
+            Empleado empleado = reclamo.getEmpleado();
+
+            if (empleado == null) {
+                throw new IllegalStateException("El reclamo debe tener un empleado asignado para pasar a EN_CURSO.");
+            }
+
+            int reclamosEnCurso = 0;
+
+            for (Reclamo r : empleado.getReclamosAsignados()) {
+                if (r.getEstadoActual() == EstadoReclamo.EN_CURSO) {
+                    reclamosEnCurso++;
+                }
+            }
+
+            if (reclamosEnCurso >= 5) {
+                throw new IllegalStateException("El empleado ya tiene 5 reclamos en curso.");
+            }
+        }
+
         if (estadoActual == null) {
             throw new IllegalStateException("El reclamo no tiene un estado actual.");
         }
