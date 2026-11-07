@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import Enum.EstadoP;
 import java.io.Serializable
     
-public class Lote {
+public class Lote implements Serializable {
     private int id_Lote;
     private int Superficie;
     private int idTitular;
