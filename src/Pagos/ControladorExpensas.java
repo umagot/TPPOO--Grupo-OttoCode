@@ -15,7 +15,8 @@ public class ControladorExpensas {
     private List<Expensa> expensas;
   
     public ControladorExpensas() {
-        this.expensas = new ArrayList<>();
+        this.dao = new ExpensaDAO();
+        this.expensas = dao.obtenerTodas();
     }
 
     public ControladorExpensas(List<Expensa> expensas) {
@@ -93,13 +94,11 @@ public class ControladorExpensas {
                     "La fecha y el medio de pago son obligatorios.");
         }
 
-        return expensa.crearPago(
-                idPago,
-                fecha,
-                importe,
-                medioPago
+       Pago pago = expensa.crearPago(idPago, fecha, importe, medioPago);
 
-        );
+        guardarCambios();
+
+        return pago;
     }
 
     public Expensa buscarExpensa(int idExpensa) {
