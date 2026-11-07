@@ -415,50 +415,6 @@ public void reabrirReclamo(int idReclamo) {
        dao.actualizarArchivo();
     }
 
-    public void cerrarReclamosVencidos() {
-
-        LocalDate fechaActual = LocalDate.now();
-
-        for (Reclamo reclamo : reclamos) {
-
-            if (reclamo.getEstadoActual() != EstadoReclamo.RESUELTO) {
-                continue;
-            }
-
-            Date fechaResolucion = null;
-
-            List<HistorialEstadoReclamo> historial = reclamo.getHistorial();
-
-            // Buscar la última vez que el reclamo fue resuelto
-            for (int i = historial.size() - 1; i >= 0; i--) {
-
-                HistorialEstadoReclamo registro = historial.get(i);
-
-                if (registro.getNuevoEstado() == EstadoReclamo.RESUELTO) {
-                    fechaResolucion = registro.getFechaCambio();
-                    break;
-                }
-            }
-
-            if (fechaResolucion == null) {
-                continue;
-            }
-
-            LocalDate fechaResolucionCalendario = fechaResolucion.toInstant()
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDate();
-
-            long diasTranscurridos = ChronoUnit.DAYS.between(
-                    fechaResolucionCalendario,
-                    fechaActual);
-
-            if (diasTranscurridos > 5) {
-                actualizarEstado(
-                        reclamo.getIdReclamo(),
-                        EstadoReclamo.CERRADO,
-                        "Cierre automático por superar los 5 días desde su resolución.");
-            }
-        }
-    }
+    
 }
 
