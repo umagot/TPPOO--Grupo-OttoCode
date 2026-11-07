@@ -8,7 +8,7 @@ import java.util.List;
 import java.io.Serializable
 
 
-public  abstract class Persona {
+public  abstract class Persona  implements Serializable{
     private int idPersona;
     private String Nombre;
     private String apellido;
