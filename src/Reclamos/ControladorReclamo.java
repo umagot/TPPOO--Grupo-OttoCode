@@ -122,16 +122,15 @@ public class ControladorReclamo {
 
         // Validacion de los 5 reclamos
 
-        int reclamosActivos = 0;
-        for (Reclamo r : empleado.getReclamosAsignados()) {
-            if (r.getEstadoActual() == EstadoReclamo.ABIERTO ||
-                    r.getEstadoActual() == EstadoReclamo.ASIGNADO ||
-                    r.getEstadoActual() == EstadoReclamo.EN_CURSO) {
-                reclamosActivos++;
-            }
-        }
+       int reclamosEnCurso = 0;
 
-        if (reclamosActivos >= 5) {
+    for (Reclamo r : empleado.getReclamosAsignados()) {
+        if (r.getEstadoActual() == EstadoReclamo.EN_CURSO) {
+            reclamosEnCurso++;
+        }
+    }
+
+        if (reclamosEnCurso >= 5) {
             throw new IllegalStateException("El empleado ya tiene 5 reclamos en curso. No se le pueden asignar más.");
         }
 
