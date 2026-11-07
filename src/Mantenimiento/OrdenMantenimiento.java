@@ -114,5 +114,6 @@ public class OrdenMantenimiento {
     }
 
     public void setDescripcionReparacion(String descripcionReparacion) {
+        this.descripcionReparacion = descripcionReparacion;
     }
 }
