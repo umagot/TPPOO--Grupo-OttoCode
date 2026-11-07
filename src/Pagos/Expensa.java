@@ -82,7 +82,6 @@ public class Expensa implements Comparable<Expensa>, Serializable {
         }
     }
 
-    // Imputación: Primero intereses acumulados, el sobrante va a capital
     public Pago crearPago(int idPago, LocalDate fecha, int montoDisponible, MedioP medioPago) {
         if (montoDisponible <= 0) {
             throw new PagoInvalidoExcepcion("El importe debe ser positivo.");
@@ -114,7 +113,6 @@ public class Expensa implements Comparable<Expensa>, Serializable {
         return nuevoPago;
     }
 
-    // Registro de asiento de ajuste (inmutabilidad de pagos)
     public Pago registrarAsientoAjuste(int idPago, LocalDate fecha, int montoAjuste) {
         Pago ajuste = new Pago(idPago, idExpensa, fecha, montoAjuste, MedioP.EFECTIVO, 0, this, true);
         agregarPago(ajuste);
