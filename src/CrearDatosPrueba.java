@@ -30,7 +30,7 @@ public class CrearDatosPrueba {
 
             try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("lotes.dat"))) {
                 out.writeObject(lotes);
-                System.out.println("✅ lotes.dat creado correctamente.");
+                System.out.println(" lotes.dat creado correctamente.");
             }
 
             // ==========================================
@@ -42,7 +42,7 @@ public class CrearDatosPrueba {
 
             try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("equipos.dat"))) {
                 out.writeObject(equipos);
-                System.out.println("✅ equipos.dat creado correctamente.");
+                System.out.println(" equipos.dat creado correctamente.");
             }
 
             // ==========================================
@@ -53,14 +53,13 @@ public class CrearDatosPrueba {
 
             try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("empleados.dat"))) {
                 out.writeObject(empleados);
-                System.out.println("✅ empleados.dat creado correctamente.");
+                System.out.println(" empleados.dat creado correctamente.");
             }
 
-            System.out.println("🚀 ¡Todos los datos de prueba fueron generados con éxito! Ya podés usar el Main.");
+            System.out.println(" ¡Todos los datos de prueba fueron generados con éxito!.");
 
         } catch (Exception e) {
-            System.out.println("❌ Error al crear los datos: " + e.getMessage());
-            e.printStackTrace();
+            System.out.println(" Error al crear los datos: " + e.getMessage());
         }
     }
 }

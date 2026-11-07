@@ -56,7 +56,7 @@ public class Main {
     private static LoteDAO loteDAO = new LoteDAO();
     private static ControladorExpensas controladorExpensas = new ControladorExpensas();
     private static ControladorVisita controladorVisita = new ControladorVisita();
-    private static ControladorReclamo controladorReclamo = new ControladorReclamo(new ArrayList<>());
+    private static ControladorReclamo controladorReclamo;
 
     // Controladores y Listas de Mantenimiento
     private static ControladorMantenimiento controladorMantenimiento = new ControladorMantenimiento();
@@ -68,6 +68,13 @@ public class Main {
 
         // Carga inicial leyendo los archivos .dat
         inicializarDatosDePrueba();
+
+        // El controlador se crea después de cargar los empleados,
+        // para que pueda aplicar correctamente las reglas de asignación.
+        controladorReclamo = new ControladorReclamo(empleados);
+
+        // Cierra los reclamos que superaron el plazo de 5 días resueltos.
+        controladorReclamo.cerrarReclamosVencidos();
 
         int opcion;
 
@@ -139,11 +146,15 @@ public class Main {
             System.out.println("0. Volver al Menú Principal");
             opcion = leerEntero("Seleccione una opción: ");
 
-            switch (opcion) {
-                case 1: listarLotes(); break;
-                case 2: listarResidentes(); break;
-                case 0: break;
-                default: System.out.println("Opción incorrecta.");
+            try {
+                switch (opcion) {
+                    case 1: listarLotes(); break;
+                    case 2: listarResidentes(); break;
+                    case 0: break;
+                    default: System.out.println("Opción incorrecta.");
+                }
+            } catch (IllegalArgumentException | IllegalStateException | java.time.DateTimeException | Pagos.PagoInvalidoExcepcion e) {
+                System.out.println("Error: " + e.getMessage());
             }
         } while (opcion != 0);
     }
@@ -158,12 +169,16 @@ public class Main {
             System.out.println("0. Volver al Menú Principal");
             opcion = leerEntero("Seleccione una opción: ");
 
-            switch (opcion) {
-                case 1: listarExpensas(); break; // <-- Faltaba el break
-                case 2: registrarExpensa(); break; // <-- Faltaba el break
-                case 3: registrarPago(); break; // <-- Faltaba el break
-                case 0: break;
-                default: System.out.println("Opción incorrecta.");
+            try {
+                switch (opcion) {
+                    case 1: listarExpensas(); break;
+                    case 2: registrarExpensa(); break;
+                    case 3: registrarPago(); break;
+                    case 0: break;
+                    default: System.out.println("Opción incorrecta.");
+                }
+            } catch (IllegalArgumentException | IllegalStateException | java.time.DateTimeException | Pagos.PagoInvalidoExcepcion e) {
+                System.out.println("Error: " + e.getMessage());
             }
         } while (opcion != 0);
     }
@@ -174,14 +189,22 @@ public class Main {
             System.out.println("\n--- MÓDULO: VISITAS Y ACCESOS ---");
             System.out.println("1. Listar autorizaciones");
             System.out.println("2. Registrar autorizacion de visita");
+            System.out.println("3. Registrar ingreso de visitante");
+            System.out.println("4. Registrar salida de visitante");
             System.out.println("0. Volver al Menú Principal");
             opcion = leerEntero("Seleccione una opción: ");
 
-            switch (opcion) {
-                case 1: listarAutorizaciones(); break; // <-- Faltaba el break
-                case 2: registrarVisita(); break; // <-- Faltaba el break
-                case 0: break;
-                default: System.out.println("Opción incorrecta.");
+            try {
+                switch (opcion) {
+                    case 1: listarAutorizaciones(); break;
+                    case 2: registrarVisita(); break;
+                    case 3: registrarIngresoVisita(); break;
+                    case 4: registrarSalidaVisita(); break;
+                    case 0: break;
+                    default: System.out.println("Opción incorrecta.");
+                }
+            } catch (IllegalArgumentException | IllegalStateException | java.time.DateTimeException | Pagos.PagoInvalidoExcepcion e) {
+                System.out.println("Error: " + e.getMessage());
             }
         } while (opcion != 0);
     }
@@ -193,15 +216,21 @@ public class Main {
             System.out.println("1. Listar reclamos");
             System.out.println("2. Registrar reclamo");
             System.out.println("3. Actualizar estado de reclamo");
+            System.out.println("4. Asignar reclamo a un empleado");
             System.out.println("0. Volver al Menú Principal");
             opcion = leerEntero("Seleccione una opción: ");
 
-            switch (opcion) {
-                case 1: listarReclamos(); break; // <-- Faltaba el break
-                case 2: registrarReclamo(); break; // <-- Faltaba el break
-                case 3: actualizarEstadoReclamo(); break; // <-- Faltaba el break
-                case 0: break;
-                default: System.out.println("Opción incorrecta.");
+            try {
+                switch (opcion) {
+                    case 1: listarReclamos(); break;
+                    case 2: registrarReclamo(); break;
+                    case 3: actualizarEstadoReclamo(); break;
+                    case 4: asignarReclamoAEmpleado(); break;
+                    case 0: break;
+                    default: System.out.println("Opción incorrecta.");
+                }
+            } catch (IllegalArgumentException | IllegalStateException | java.time.DateTimeException | Pagos.PagoInvalidoExcepcion e) {
+                System.out.println("Error: " + e.getMessage());
             }
         } while (opcion != 0);
     }
@@ -217,17 +246,20 @@ public class Main {
             System.out.println("0. Volver al Menú Principal");
             opcion = leerEntero("Seleccione una opción: ");
 
-            switch (opcion) {
-                case 1: consultarEstadoEquipos(); break;
-                case 2: registrarFallaEquipo(); break;
-                case 3: generarOrdenMantenimiento(); break;
-                case 4: cerrarOrdenMantenimiento(); break;
-                case 0: break;
-                default: System.out.println("Opción incorrecta.");
+            try {
+                switch (opcion) {
+                    case 1: consultarEstadoEquipos(); break;
+                    case 2: registrarFallaEquipo(); break;
+                    case 3: generarOrdenMantenimiento(); break;
+                    case 4: cerrarOrdenMantenimiento(); break;
+                    case 0: break;
+                    default: System.out.println("Opción incorrecta.");
+                }
+            } catch (IllegalArgumentException | IllegalStateException | java.time.DateTimeException | Pagos.PagoInvalidoExcepcion e) {
+                System.out.println("Error: " + e.getMessage());
             }
         } while (opcion != 0);
     }
-
 
     private static void inicializarDatosDePrueba() {
         System.out.println("Cargando datos del sistema...");
@@ -244,10 +276,10 @@ public class Main {
             System.out.println(" -> No se encontró empleados.dat o está vacío.");
         }
 
-        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("fallas.dat"))) {
-            fallasRegistradas = (List<Falla>) in.readObject();
-        } catch (Exception e) {
-            // Es normal que no haya fallas registradas al inicio.
+        // Las fallas se reconstruyen desde los equipos para que apunten al MISMO objeto
+        fallasRegistradas = new ArrayList<>();
+        for (Equipo eq : equipos) {
+            fallasRegistradas.addAll(eq.getFallas());
         }
     }
 
@@ -262,12 +294,6 @@ public class Main {
             out.writeObject(empleados);
         } catch (Exception e) {
             System.out.println("Error al guardar empleados: " + e.getMessage());
-        }
-
-        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("fallas.dat"))) {
-            out.writeObject(fallasRegistradas);
-        } catch (Exception e) {
-            System.out.println("Error al guardar fallas: " + e.getMessage());
         }
     }
 
@@ -396,6 +422,21 @@ public class Main {
         }
     }
 
+    private static void registrarIngresoVisita() {
+        int idAcceso = leerEntero("ID del registro de acceso: ");
+        int idAutorizacion = leerEntero("ID de la autorización: ");
+        int idGuardia = leerEntero("ID del guardia: ");
+
+        controladorVisita.registrarIngreso(idAcceso, idAutorizacion, idGuardia);
+        System.out.println("Ingreso registrado correctamente.");
+    }
+
+    private static void registrarSalidaVisita() {
+        int idAutorizacion = leerEntero("ID de la autorización: ");
+        controladorVisita.registrarSalida(idAutorizacion);
+        System.out.println("Salida registrada correctamente.");
+    }
+
     private static void registrarReclamo() {
         int idReclamo = leerEntero("ID del reclamo: ");
         int idPersona = leerEntero("ID de persona del residente: ");
@@ -454,16 +495,44 @@ public class Main {
         System.out.print("Ingrese el nuevo estado: ");
 
         try {
-            // Transformamos el texto al Enum EstadoReclamo
-            EstadoReclamo nuevoEstado = EstadoReclamo.valueOf(scanner.nextLine().trim().toUpperCase());
+            EstadoReclamo nuevoEstado = EstadoReclamo.valueOf(
+                    scanner.nextLine().trim().toUpperCase()
+            );
 
-            // Ahora sí los tipos coinciden y no tira rojo
-            reclamoEncontrado.setEstadoActual(nuevoEstado);
-            System.out.println("¡Estado del reclamo actualizado con éxito a " + nuevoEstado + "!");
+            // La asignación debe pasar por el controlador para validar
+            // el límite de cinco reclamos en curso por empleado.
+            if (nuevoEstado == EstadoReclamo.ASIGNADO
+                    && reclamoEncontrado.getEstadoActual() == EstadoReclamo.ABIERTO) {
+                int idEmpleado = leerEntero("ID del empleado responsable: ");
+                controladorReclamo.asignarReclamo(idReclamo, idEmpleado);
+                // La reapertura debe pasar por su método específico para
+                // validar el plazo de 5 días desde la resolución.
+            } else if (reclamoEncontrado.getEstadoActual() == EstadoReclamo.RESUELTO
+                    && nuevoEstado == EstadoReclamo.EN_CURSO) {
+                controladorReclamo.reabrirReclamo(idReclamo);
+            } else {
+                System.out.print("Observación del cambio: ");
+                String observacion = scanner.nextLine();
+                controladorReclamo.actualizarEstado(
+                        idReclamo,
+                        nuevoEstado,
+                        observacion
+                );
+            }
 
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error: Estado inválido. Asegúrese de escribirlo exactamente como aparece en la lista.");
+            System.out.println("Estado del reclamo actualizado correctamente a " + nuevoEstado + ".");
+
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            System.out.println("No se pudo actualizar el reclamo: " + e.getMessage());
         }
+    }
+
+    private static void asignarReclamoAEmpleado() {
+        int idReclamo = leerEntero("ID del reclamo a asignar: ");
+        int idEmpleado = leerEntero("ID del empleado responsable: ");
+
+        controladorReclamo.asignarReclamo(idReclamo, idEmpleado);
+        System.out.println("Reclamo asignado correctamente.");
     }
 
     // ==========================================
@@ -508,6 +577,7 @@ public class Main {
         fallasRegistradas.add(falla);
 
         System.out.println("¡Falla registrada! El equipo ahora está FUERA DE SERVICIO.");
+        guardarDatosMantenimiento();
     }
 
     private static void generarOrdenMantenimiento() {
@@ -541,8 +611,24 @@ public class Main {
             return;
         }
 
-        Empleado empleadoElegido = empleados.get(0);
-        System.out.println("Asignando al empleado: " + empleadoElegido.getNombre());
+        System.out.println("--- Empleados disponibles ---");
+        for (Empleado emp : empleados) {
+            System.out.println("ID: " + emp.getIdPersona() + " | " + emp.getNombre() + " " + emp.getApellido() + " | " + emp.getTipoPersonal());
+        }
+
+        int idEmpleado = leerEntero("ID del empleado responsable: ");
+        Empleado empleadoElegido = null;
+        for (Empleado emp : empleados) {
+            if (emp.getIdPersona() == idEmpleado) {
+                empleadoElegido = emp;
+                break;
+            }
+        }
+
+        if (empleadoElegido == null) {
+            System.out.println("Empleado no encontrado.");
+            return;
+        }
 
         int idOrden = leerEntero("ID para la nueva Orden: ");
         System.out.print("Descripción del trabajo a realizar: ");
@@ -554,6 +640,7 @@ public class Main {
                     empleadoElegido, fallaElegida, equipos
             );
             System.out.println("¡Orden " + orden.getIdOrden() + " creada con éxito! Prioridad: " + orden.getPrioridad());
+            guardarDatosMantenimiento();
         } catch (Exception e) {
             System.out.println("Error al crear la orden: " + e.getMessage());
         }
@@ -600,6 +687,7 @@ public class Main {
         try {
             controladorMantenimiento.cerrarOrden(ordenACerrar, LocalDateTime.now(), detalle);
             System.out.println("¡Orden cerrada con éxito! El equipo vuelve a estar ACTIVO.");
+            guardarDatosMantenimiento();
         } catch (Exception e) {
             System.out.println("Error al cerrar la orden: " + e.getMessage());
         }
@@ -634,8 +722,8 @@ public class Main {
         System.out.println("\n3. EQUIPOS FUERA DE SERVICIO:");
         boolean hayEquipos = false;
         for (Equipo eq : equipos) {
-            if (eq.getEstado() == Estado.FUERA_DE_SERVICIO) {
-                System.out.println(" - " + eq.getTipo() + " en " + eq.getSector() + " (Inactivo desde: " + eq.getFechaInicioInactividad() + ")");
+            if (eq.getEstado() == Estado.FUERA_DE_SERVICIO || eq.getEstado() == Estado.EN_REPARACION) {
+                System.out.println(" - " + eq.getTipo() + " en " + eq.getSector() + " [" + eq.getEstado() + "] (Inactivo desde: " + eq.getFechaInicioInactividad() + ")");
                 hayEquipos = true;
             }
         }
