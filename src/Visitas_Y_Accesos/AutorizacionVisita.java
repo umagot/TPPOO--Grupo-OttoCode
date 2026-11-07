@@ -6,7 +6,7 @@ import Lotes.Lote;
 import Lotes.Residente;
 import java.io.Serializable
 
-public class AutorizacionVisita {
+public class AutorizacionVisita implements Serializable {
     private int idAutorizacion;
     private int idLote;
     private int idResidente;
