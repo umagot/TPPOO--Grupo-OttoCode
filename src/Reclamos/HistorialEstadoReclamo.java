@@ -1,9 +1,10 @@
 package Reclamos;
 
+import java.io.Serializable;
 import java.util.Date;
 import Enum.EstadoReclamo;
 
-public class HistorialEstadoReclamo {
+public class HistorialEstadoReclamo implements Serializable {
         private int idHistorial;
         private int idReclamo;
         private EstadoReclamo nuevoEstado;

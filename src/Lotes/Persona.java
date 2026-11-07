@@ -5,7 +5,7 @@ import Reclamos.Reclamo;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.io.Serializable
+import java.io.Serializable;
 
 
 public  abstract class Persona  implements Serializable{

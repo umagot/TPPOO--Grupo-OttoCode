@@ -1,5 +1,6 @@
 package Mantenimiento;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -7,7 +8,7 @@ import java.util.List;
 import Enum.Estado;
 import Enum.Prioridad;
 
-public abstract class Equipo {
+public abstract class Equipo implements Serializable {
     private int idEquipo;
     private String tipo;
     private String sector; // Calles internas, accesos, espacios comunes

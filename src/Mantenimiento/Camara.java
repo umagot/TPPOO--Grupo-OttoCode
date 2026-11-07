@@ -1,12 +1,13 @@
 package Mantenimiento;
 
+import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import Enum.Estado ;
 import Enum.Prioridad;
 
-public class Camara extends Equipo {
+public class Camara extends Equipo implements Serializable {
     private String resolucion;
     private int diasGrabacion;
 

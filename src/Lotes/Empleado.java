@@ -4,23 +4,22 @@ import Mantenimiento.OrdenMantenimiento;
 import Reclamos.Reclamo;
 import Visitas_Y_Accesos.Registros;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
+import Enum.TipoP;
 
-public class Empleado extends Persona {
+public class Empleado extends Persona implements Serializable {
     private int legajo;
     private LocalDate fechaIngreso;
-    private String tipoPersonal;
+    private TipoP tipoPersonal; // <-- Es de clase Tipo
 
     private final List<Reclamo> reclamosAsignados =  new ArrayList<>();
-
     private final List<OrdenMantenimiento> ordenesMantenimiento = new ArrayList<>();
-
     private final List<Registros> registrosGuardia = new ArrayList<>();
 
-
-    public Empleado(int idPersona, String nombre, String apellido, int dni, String telefono, String correoElectronico, int legajo, LocalDate fechaIngreso, String tipoPersonal) {
+    public Empleado(int idPersona, String nombre, String apellido, int dni, String telefono, String correoElectronico, int legajo, LocalDate fechaIngreso, TipoP tipoPersonal) {
         super(idPersona, nombre, apellido, dni, telefono, correoElectronico);
         this.legajo = legajo;
         this.fechaIngreso = fechaIngreso;
@@ -42,18 +41,18 @@ public class Empleado extends Persona {
     public void setFechaIngreso(LocalDate fechaIngreso) {
         this.fechaIngreso = fechaIngreso;
     }
-
-    public String getTipoPersonal() {
+    public TipoP getTipoPersonal() {
         return tipoPersonal;
     }
 
-    public void setTipoPersonal(String tipoPersonal) {
+    public void setTipoPersonal(TipoP tipoPersonal) {
         this.tipoPersonal = tipoPersonal;
     }
 
     public List<Reclamo> getReclamosAsignados() {
         return List.copyOf(reclamosAsignados);
     }
+
     public void asignarReclamo(Reclamo reclamo) {
         if (reclamo != null && !reclamosAsignados.contains(reclamo)){
             reclamosAsignados.add(reclamo);
@@ -68,12 +67,12 @@ public class Empleado extends Persona {
         if (orden != null && !ordenesMantenimiento.contains(orden)){
             ordenesMantenimiento.add(orden);
         }
-
     }
 
     public List<Registros> getRegistrosGuardia() {
         return List.copyOf(registrosGuardia);
     }
+
     public void agregarRegistroGuardia(Registros registro){
         if (registro != null && !registrosGuardia.contains(registro)){
             registrosGuardia.add(registro);

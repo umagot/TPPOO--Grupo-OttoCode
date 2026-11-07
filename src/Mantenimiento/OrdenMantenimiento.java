@@ -1,10 +1,12 @@
 package Mantenimiento;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import Enum.Prioridad;
 import Lotes.Empleado;
 
-public class OrdenMantenimiento {
+public class OrdenMantenimiento implements Serializable {
     private int idOrden;
     private int idEquipo;
     private int idEmpleado;

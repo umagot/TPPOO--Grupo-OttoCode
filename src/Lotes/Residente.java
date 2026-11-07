@@ -1,5 +1,6 @@
 package Lotes;
 
+import java.io.Serializable;
 import java.util.List;
 import Enum.Tipo;
 import Enum.estadoR;
@@ -7,7 +8,7 @@ import Visitas_Y_Accesos.AutorizacionVisita;
 
 import java.util.ArrayList;
 
-public class Residente extends Persona {
+public class Residente extends Persona implements Serializable {
     private int IdResidente;
     private int idLote;
     private Tipo tipoResidente;
@@ -55,18 +56,19 @@ public class Residente extends Persona {
     }
 
     public void agregarAutorizacion(AutorizacionVisita autorizacion) {
-    if (autorizacion != null && !autorizacionesVisita.contains(autorizacion)) {
-        autorizacionesVisita.add(autorizacion);
+        if (autorizacion != null && !autorizacionesVisita.contains(autorizacion)) {
+            autorizacionesVisita.add(autorizacion);
+        }
     }
-}
 
 
-    public Residente(int idPersona, String nombre, String apellido, int dni, String telefono, String correoElectronico, int idResidente, int idLote, Tipo tipoResidente, estadoR estadoReclamo, Lote lote, List<AutorizacionVisita> autorizacionesVisita) {
+    public Residente(int idPersona, String nombre, String apellido, int dni, String telefono, String correoElectronico, int idResidente, Tipo tipoResidente, Lote lote) {
+
         super(idPersona, nombre, apellido, dni, telefono, correoElectronico);
-        IdResidente = idResidente;
-        this.idLote = idLote;
+        this.IdResidente = idResidente;
         this.tipoResidente = tipoResidente;
         this.lote = lote;
-        this.autorizacionesVisita = autorizacionesVisita;
+        this.idLote = lote.getId_Lote();
+        this.autorizacionesVisita = new ArrayList<>();
     }
 }

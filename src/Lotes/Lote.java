@@ -1,5 +1,6 @@
 package Lotes;
 
+import java.io.Serializable;
 import Pagos.Expensa;
 import Reclamos.Reclamo;
 import Visitas_Y_Accesos.AutorizacionVisita;
@@ -7,9 +8,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.time.LocalDate;
 import Enum.EstadoP;
-import java.io.Serializable
-    
-public class Lote implements Serializable {
+
+public class Lote implements Serializable{
     private int id_Lote;
     private int Superficie;
     private int idTitular;

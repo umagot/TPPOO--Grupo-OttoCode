@@ -1,8 +1,10 @@
 package Mantenimiento;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Falla {
+public class Falla implements Serializable {
     private int idFalla;
     private int idEquipo;
     private LocalDateTime fechaRegistro;
