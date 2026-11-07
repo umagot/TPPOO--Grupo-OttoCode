@@ -3,7 +3,7 @@ package Visitas_Y_Accesos;
 import java.time.LocalDateTime;
 import java.io.Serializable
     
-public class Registros {
+public class Registros implements Serializable{
     private int idAcceso;
     private int idAutorizacion;
     private int idGuardia;
