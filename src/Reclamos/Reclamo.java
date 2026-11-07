@@ -8,6 +8,7 @@ import Lotes.Lote;
 import Lotes.Persona;
 import Enum.EstadoReclamo;
 import java.io.Serializable;
+import Enum.Prioridad;
 
 
 public class Reclamo implements Serializable {
@@ -16,6 +17,7 @@ public class Reclamo implements Serializable {
     private Date fecha;
     private String descripcion;
     private TipoP tipo;
+    private Prioridad prioridad;
     private int idLote;
     private int idEmpleado;
     private Persona persona;
@@ -100,6 +102,9 @@ public class Reclamo implements Serializable {
     public Empleado getEmpleado() {
         return empleado;
     }
+    public Prioridad getPrioridad() {
+    return prioridad;
+    }    
 
     public void setEmpleado(Empleado empleado) {
         this.empleado = empleado;
@@ -127,6 +132,7 @@ public class Reclamo implements Serializable {
         this.fecha = fecha;
         this.descripcion = descripcion;
         this.tipo = tipo;
+        this.prioridad = calcularPrioridad();
         this.idLote = idLote;
         this.idEmpleado = idEmpleado;
         this.persona = persona;
@@ -134,6 +140,22 @@ public class Reclamo implements Serializable {
         this.empleado = empleado;
         this.historial = historial;
         this.comentarios = comentarios;
+    }
+    private Prioridad calcularPrioridad() {
+    switch (tipo) {
+        case SEGURIDAD:
+            return Prioridad.ALTA;
+
+        case MANTENIMIENTO:
+            return Prioridad.MEDIA;
+
+        case CONVIVENCIA:
+        case ADMINISTRATIVO:
+            return Prioridad.BAJA;
+
+        default:
+            throw new IllegalArgumentException("Tipo de reclamo inválido.");
+        }
     }
 
     public void agregarHistorial(HistorialEstadoReclamo nuevoHistorial) {
