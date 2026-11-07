@@ -175,7 +175,7 @@ public class ControladorReclamo {
             Empleado empleado = reclamo.getEmpleado();
 
             if (empleado == null) {
-                throw new IllegalStateException("El reclamo debe tener un empleado asignado para pasar a EN_CURSO.");
+                throw new IllegalStateException("El reclamo debe tener un empleado asignado.");
             }
 
             int reclamosEnCurso = 0;
