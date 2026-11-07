@@ -188,6 +188,72 @@ public class ControladorReclamo {
         guardarCambios();
     }
 
+    
+public void reabrirReclamo(int idReclamo) {
+
+    Reclamo reclamo = buscarReclamo(idReclamo);
+
+    if (reclamo == null) {
+        throw new IllegalArgumentException(
+                "No existe el reclamo indicado."
+        );
+    }
+
+    if (reclamo.getEstadoActual() != EstadoReclamo.RESUELTO) {
+        throw new IllegalStateException(
+                "Solo se pueden reabrir reclamos que estén resueltos."
+        );
+    }
+
+    Date fechaResolucion = null;
+
+    // Buscamos la última fecha en la que se resolvió el reclamo
+    List<HistorialEstadoReclamo> historial = reclamo.getHistorial();
+
+    for (int i = historial.size() - 1; i >= 0; i--) {
+
+        HistorialEstadoReclamo registro = historial.get(i);
+
+        if (registro.getNuevoEstado() == EstadoReclamo.RESUELTO) {
+            fechaResolucion = registro.getFechaCambio();
+            break;
+        }
+    }
+
+    if (fechaResolucion == null) {
+        throw new IllegalStateException(
+                "No se encontró la fecha de resolución del reclamo."
+        );
+    }
+
+    // Convertimos las fechas a LocalDate para comparar días calendario
+    LocalDate fechaResolucionCalendario = fechaResolucion.toInstant()
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate();
+
+    LocalDate fechaActual = LocalDate.now();
+
+    long diasTranscurridos = ChronoUnit.DAYS.between(
+            fechaResolucionCalendario,
+            fechaActual
+    );
+
+    // Validamos que no hayan pasado más de 5 días calendario
+    if (diasTranscurridos < 0 || diasTranscurridos > 5) {
+        throw new IllegalStateException(
+                "No se puede reabrir el reclamo: venció el plazo de 5 días."
+        );
+    }
+
+    // Reabrimos el reclamo y registramos el cambio en el historial
+    actualizarEstado(
+            idReclamo,
+            EstadoReclamo.EN_CURSO,
+            "Reclamo reabierto dentro del plazo de 5 días calendario."
+    );
+}
+
+
     // 4. AGREGAR UN COMENTARIO A UN RECLAMO
     public ComentarioReclamo agregarComentario(
             int idComentario,
