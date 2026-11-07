@@ -22,7 +22,6 @@ public class ControladorReclamo {
     private int siguienteIdHistorial = 1;
 
 
-    // Constructor principal
     public ControladorReclamo(List<Empleado> empleados) {
 
         if (empleados != null) {
@@ -35,7 +34,6 @@ public class ControladorReclamo {
         this.reclamos = dao.obtenerTodos();
     }
 
-    // 1. REGISTRAR UN RECLAMO
     public Reclamo registrarReclamo(
             int idReclamo,
             Residente residente,
@@ -101,7 +99,6 @@ public class ControladorReclamo {
         return reclamo;
     }
 
-    // 2. ASIGNAR UN RECLAMO A UN EMPLEADO
     public void asignarReclamo(int idReclamo, int idEmpleado) {
 
         Reclamo reclamo = buscarReclamo(idReclamo);
@@ -147,7 +144,6 @@ public class ControladorReclamo {
         guardarCambios();
     }
 
-    // 3. ACTUALIZAR EL ESTADO DE UN RECLAMO
     public void actualizarEstado(
             int idReclamo,
             EstadoReclamo nuevoEstado,
@@ -169,7 +165,6 @@ public class ControladorReclamo {
 
         EstadoReclamo estadoActual = reclamo.getEstadoActual();
 
-        // Validar que el empleado no supere los 5 reclamos en curso
         if (nuevoEstado == EstadoReclamo.EN_CURSO &&
              estadoActual != EstadoReclamo.EN_CURSO) {
             Empleado empleado = reclamo.getEmpleado();
@@ -286,7 +281,6 @@ public void reabrirReclamo(int idReclamo) {
 
         List<HistorialEstadoReclamo> historial = reclamo.getHistorial();
 
-        // Buscar la última vez que el reclamo fue resuelto
         for (int i = historial.size() - 1; i >= 0; i--) {
 
             HistorialEstadoReclamo registro = historial.get(i);
@@ -362,7 +356,6 @@ public void reabrirReclamo(int idReclamo) {
         return nuevoComentario;
     }
 
-    // 5. REGISTRAR UN CAMBIO EN EL HISTORIAL
     private void registrarHistorial(
             Reclamo reclamo,
             EstadoReclamo nuevoEstado,
@@ -382,7 +375,6 @@ public void reabrirReclamo(int idReclamo) {
         siguienteIdHistorial++;
     }
 
-    // 6. BUSCAR UN RECLAMO POR SU ID
     public Reclamo buscarReclamo(int idReclamo) {
 
         for (Reclamo reclamo : reclamos) {
@@ -393,8 +385,6 @@ public void reabrirReclamo(int idReclamo) {
 
         return null;
     }
-
-    // 7. BUSCAR UN EMPLEADO POR SU ID DE PERSONA
     public Empleado buscarEmpleado(int idEmpleado) {
 
         for (Empleado empleado : empleados) {
@@ -406,7 +396,6 @@ public void reabrirReclamo(int idReclamo) {
         return null;
     }
 
-    // 8. OBTENER LA LISTA DE RECLAMOS
     public List<Reclamo> getReclamos() {
         return List.copyOf(reclamos);
     }
