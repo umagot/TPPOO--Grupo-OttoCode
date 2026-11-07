@@ -16,7 +16,6 @@ public class ControladorVisita {
         this.autorizaciones = dao.obtenerTodas();
     }
 
-    // 1. REGISTRAR UNA AUTORIZACION DE VISITA
     public AutorizacionVisita registrarAutorizacion(
             int idAutorizacion,
             Residente residente,
@@ -68,10 +67,8 @@ public class ControladorVisita {
             );
         }
 
-        // Obtener el lote del residente
         Lote lote = residente.getLote();
 
-        // Crear la autorización
         AutorizacionVisita autorizacion = new AutorizacionVisita(
                 idAutorizacion,
                 lote.getId_Lote(),
@@ -87,17 +84,14 @@ public class ControladorVisita {
 
         autorizacion.setFechaHoraFin(fechaHoraFin);
 
-        // Agregar a la lista del controlador
         autorizaciones.add(autorizacion);
 
-        // Agregar a la lista del lote
         if (lote.getAutorizaciones() == null) {
             lote.setAutorizaciones(new ArrayList<>());
         }
 
         lote.agregarAutorizacion(autorizacion);
 
-        // Agregar a la lista del residente
         residente.agregarAutorizacion(autorizacion);
 
         guardarCambios();
@@ -110,7 +104,6 @@ public class ControladorVisita {
             int idAutorizacion,
             int idGuardia) {
 
-        // Buscar la autorización
         AutorizacionVisita autorizacion =
                 buscarAutorizacion(idAutorizacion);
 
@@ -120,7 +113,6 @@ public class ControladorVisita {
             );
         }
 
-        // Comprobar que esté vigente
         if (!estaAutorizada(idAutorizacion)) {
             throw new IllegalStateException(
                     "La visita no está autorizada en este momento."
@@ -138,7 +130,6 @@ public class ControladorVisita {
             }
         }
 
-        // Crear el registro sin hora de ingreso ni salida
         Registros registro = new Registros(
                 idAcceso,
                 idAutorizacion,
@@ -148,10 +139,8 @@ public class ControladorVisita {
                 autorizacion
         );
 
-        // Registrar la hora actual
         registro.registrarIngreso(LocalDateTime.now());
 
-        // Asociar el registro a la autorización
         autorizacion.getRegistros().add(registro);
 
         guardarCambios();
@@ -159,7 +148,6 @@ public class ControladorVisita {
         return registro;
     }
 
-    // 5. REGISTRAR LA SALIDA DE UNA VISITA
     public void registrarSalida(int idAutorizacion) {
 
         AutorizacionVisita autorizacion =
@@ -173,7 +161,6 @@ public class ControladorVisita {
 
         List<Registros> registros = autorizacion.getRegistros();
 
-        // Buscar un ingreso que todavía no tenga salida
         for (Registros registro : registros) {
 
             if (registro.getHoraingreso() != null
@@ -190,7 +177,6 @@ public class ControladorVisita {
         );
     }
 
-    // 2. BUSCAR UNA AUTORIZACION POR ID
     public AutorizacionVisita buscarAutorizacion(int idAutorizacion) {
 
         for (AutorizacionVisita autorizacion : autorizaciones) {
@@ -203,7 +189,6 @@ public class ControladorVisita {
         return null;
     }
 
-    // 3. VALIDAR SI UNA VISITA ESTA AUTORIZADA
     public boolean estaAutorizada(int idAutorizacion) {
 
         AutorizacionVisita autorizacion =
@@ -219,12 +204,10 @@ public class ControladorVisita {
                 && !ahora.isAfter(autorizacion.getFechaHoraFin());
     }
 
-    // 4. OBTENER TODAS LAS AUTORIZACIONES
     public List<AutorizacionVisita> getAutorizaciones() {
         return List.copyOf(autorizaciones);
     }
 
-    // 5. BUSCAR AUTORIZACIONES POR DNI
     public List<AutorizacionVisita> buscarPorDNI(int dni) {
 
         List<AutorizacionVisita> encontradas = new ArrayList<>();
