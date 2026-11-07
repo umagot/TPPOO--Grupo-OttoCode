@@ -1,7 +1,8 @@
 package Visitas_Y_Accesos;
 
 import java.time.LocalDateTime;
-
+import java.io.Serializable
+    
 public class Registros {
     private int idAcceso;
     private int idAutorizacion;
