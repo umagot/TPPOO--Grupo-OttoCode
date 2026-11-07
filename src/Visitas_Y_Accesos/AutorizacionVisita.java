@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import Lotes.Lote;
 import Lotes.Residente;
+import java.io.Serializable
 
 public class AutorizacionVisita {
     private int idAutorizacion;
