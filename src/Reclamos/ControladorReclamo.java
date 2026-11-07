@@ -231,7 +231,6 @@ public void reabrirReclamo(int idReclamo) {
 
     Date fechaResolucion = null;
 
-    // Buscamos la última fecha en la que se resolvió el reclamo
     List<HistorialEstadoReclamo> historial = reclamo.getHistorial();
 
     for (int i = historial.size() - 1; i >= 0; i--) {
@@ -250,7 +249,6 @@ public void reabrirReclamo(int idReclamo) {
         );
     }
 
-    // Convertimos las fechas a LocalDate para comparar días calendario
     LocalDate fechaResolucionCalendario = fechaResolucion.toInstant()
             .atZone(ZoneId.systemDefault())
             .toLocalDate();
@@ -262,23 +260,66 @@ public void reabrirReclamo(int idReclamo) {
             fechaActual
     );
 
-    // Validamos que no hayan pasado más de 5 días calendario
     if (diasTranscurridos < 0 || diasTranscurridos > 5) {
         throw new IllegalStateException(
                 "No se puede reabrir el reclamo: venció el plazo de 5 días."
         );
     }
 
-    // Reabrimos el reclamo y registramos el cambio en el historial
     actualizarEstado(
             idReclamo,
             EstadoReclamo.EN_CURSO,
-            "Reclamo reabierto dentro del plazo de 5 días calendario."
-    );
+            "Reclamo reabierto dentro del plazo de 5 días calendario.");
+    }
+
+    public void cerrarReclamosVencidos() {
+
+    LocalDate fechaActual = LocalDate.now();
+
+    for (Reclamo reclamo : reclamos) {
+
+        if (reclamo.getEstadoActual() != EstadoReclamo.RESUELTO) {
+            continue;
+        }
+
+        Date fechaResolucion = null;
+
+        List<HistorialEstadoReclamo> historial = reclamo.getHistorial();
+
+        // Buscar la última vez que el reclamo fue resuelto
+        for (int i = historial.size() - 1; i >= 0; i--) {
+
+            HistorialEstadoReclamo registro = historial.get(i);
+
+            if (registro.getNuevoEstado() == EstadoReclamo.RESUELTO) {
+                fechaResolucion = registro.getFechaCambio();
+                break;
+            }
+        }
+
+        if (fechaResolucion == null) {
+            continue;
+        }
+
+        LocalDate fechaResolucionCalendario = fechaResolucion.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+
+        long diasTranscurridos = ChronoUnit.DAYS.between(
+                fechaResolucionCalendario,
+                fechaActual);
+
+        if (diasTranscurridos > 5) {
+
+            actualizarEstado(
+                    reclamo.getIdReclamo(),
+                    EstadoReclamo.CERRADO,
+                    "Cierre automático por superar los 5 días desde su resolución.");
+        }
+    }
 }
 
 
-    // 4. AGREGAR UN COMENTARIO A UN RECLAMO
     public ComentarioReclamo agregarComentario(
             int idComentario,
             int idReclamo,
