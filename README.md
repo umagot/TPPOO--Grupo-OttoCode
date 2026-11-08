@@ -25,7 +25,6 @@ Los datos se guardan en archivos `.dat` (serialización de objetos) en la carpet
 
 
 
-
 Ejecución
 
 El programa necesita datos iniciales (lotes, residentes, empleados y equipos), porque el menú no permite darlos de alta. Por eso, **la primera vez hay que ejecutar `CrearDatosPrueba` antes que `Main`**.
@@ -73,4 +72,6 @@ Si se modifica alguna clase que se guarda en los archivos, los `.dat` anteriores
 
 
 Link al informe sobre el trabajo: https://docs.google.com/document/d/1XVrgqwNjy4vwtjdGbIkWpLfnOP3MJb9UGs0pv_SVCmA/edit?usp=sharing
+
+Link al repositorio de github: https://github.com/umagot/TPPOO--Grupo-OttoCode.git
 
