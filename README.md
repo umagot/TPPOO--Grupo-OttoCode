@@ -72,3 +72,5 @@ Para volver al estado inicial, borrar todos los archivos `.dat` de la carpeta de
 Si se modifica alguna clase que se guarda en los archivos, los `.dat` anteriores pueden dejar de leerse (el sistema informa que no los encontró). En ese caso, también hay que borrarlos y regenerarlos con `CrearDatosPrueba`.
 
 
+Link al informe sobre el trabajo: https://docs.google.com/document/d/1XVrgqwNjy4vwtjdGbIkWpLfnOP3MJb9UGs0pv_SVCmA/edit?usp=sharing
+
